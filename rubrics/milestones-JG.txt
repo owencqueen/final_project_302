@@ -1,11 +1,13 @@
 John Greathouse
 
-Rubric:
-	-- 6 hours dedicated to Final Project
-	-- This file is in our repository, accessable [here]
-	-- Tasks completed and report on the process
+A link to our Repository: https://github.com/owencqueen/302_final_project
 
-[here]: https://github.com/owencqueen/302_final_project
+Rubric:
+	+20 Write a program in Python
+	+ 5 Researching methods of storing data in 3D space
+	+ 5 Research machine learning techniques
+	+10 Meet with team to figure out what each of us will do next
+
 
 Tasks:
 	-- Write a program in Python
@@ -13,5 +15,37 @@ Tasks:
 	-- Research machine learning techniques
 	-- Meeting to figure out what ways of machine learning are best
 
+Hours log:
+	-- 30 mins: Thurs March 5th from 11:30 am to 12:00 pm
+		
+		- Researched machine learning and learned about Python some
+	
+
+	-- 2 hours: Sun March 8th from 1:05 pm to 3:05 pm
+		
+		- Programmed the first half of a String-Math program
+	
+
+	-- 1 hour 50 mins: Sun March 8th from 4:40 pm to 6:30 pm
+		
+		- Finished the String-Math program
+		- Researched ways to work with python and data structures
+	
+
+	-- 1 hour 25 mins: Monday March 9th from 11:05 am to 12:30 pm
+
+		- Set up rubric and discussed class structure with group
+
 Report:
 	
+	Because learning a new language was necessary for part of this project,
+a majority of my time was used to familiarize myself with the dos and the 
+don'ts of Python. I belive it will be beneficial for our group to utilize 
+this language, as it simplifies the complexity of deciding and planning out 
+our data structure. 
+	At the moment, our main focus is deciding how exactly we'd like to
+implement our functions and how to split up the work. We've gone through a
+couple of methods of storing our data, but I think the best way for us to
+set up our structure is one that matches our end-goal for this project:
+machine learning.
+	 After our group meeting...
