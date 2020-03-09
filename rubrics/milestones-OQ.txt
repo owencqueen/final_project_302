@@ -1,0 +1,5 @@
+Rubric: Out of 40 points
+
++10 - Researching linking C++ and Python
++20 - Figuring out how to represent 3D data (cube)
++10 - Reviewing Python
