@@ -1,2 +1,17 @@
-John Greathouse's Rubric:
+John Greathouse
 
+Rubric:
+	-- 6 hours dedicated to Final Project
+	-- This file is in our repository, accessable [here]
+	-- Tasks completed and report on the process
+
+[here]: https://github.com/owencqueen/302_final_project
+
+Tasks:
+	-- Write a program in Python
+	-- Figure out different ways to store 3D data
+	-- Research machine learning techniques
+	-- Meeting to figure out what ways of machine learning are best
+
+Report:
+	
