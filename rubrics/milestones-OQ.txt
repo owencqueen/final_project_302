@@ -1,5 +1,7 @@
 Milestones for Challenge 7 - Owen Queen
 
+Link to repo: https://github.com/owencqueen/302_final_project.git
+
 Rubric: Out of 40 points
 
 	+10 - Researching software development tools in Python
