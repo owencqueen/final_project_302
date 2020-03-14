@@ -35,6 +35,12 @@ Hours log:
 	-- 1 hour 25 mins: Monday March 9th from 11:05 am to 12:30 pm
 
 		- Set up rubric and discussed class structure with group
+	
+	-- 30 mins: Thursday March 12th from 3:25 pm to 3:55 pm
+
+		- Discussed with group how we'll continue with out projects
+		- Discussed who will do which parts and what we'd like the have
+			completed by the weekend after spring break
 
 Report:
 	
@@ -44,8 +50,13 @@ don'ts of Python. I belive it will be beneficial for our group to utilize
 this language, as it simplifies the complexity of deciding and planning out 
 our data structure. 
 	At the moment, our main focus is deciding how exactly we'd like to
-implement our functions and how to split up the work. We've gone through a
+implement our functions and how to split up the work. We've deliberated a
 couple of methods of storing our data, but I think the best way for us to
 set up our structure is one that matches our end-goal for this project:
 machine learning.
-	 After our group meeting...
+	 After our group meeting we decided exactly how we'd continue with
+implementing our cube class: using simple arrays. We also decided on how 
+exactly we are going to split up the work for the next portion of our
+project. We will be working on the functions for implementation, the file
+structure that our system will utilize, and the user interface that our
+project will implement.
