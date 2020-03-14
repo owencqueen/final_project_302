@@ -1,7 +1,10 @@
+import cube
 
 class rubiks_cube:
 	
 	def __init__(self):
+		self.check_cube = cube.check_cube
+		dim = 2 # Defines the dimension of the cube; need it for check_cube
 
 	f = []
 	b = []
