@@ -1,0 +1,32 @@
+Jared Staman
+
+github : https://github.com/owencqueen/302_final_project.git 
+my code : JaredPythonPractice
+
+mini-challenge 7: 40 points
+
+10pts: research 3-D representation of rubik's cube
+
+10pts: continue learning/researching python
+
+10pts: determine what data structure(s) we want to use
+
+10pts: write a simple python program
+
+
+Jared Staman time log:
+
+2 hours in lab on Monday - planned how we want to represent the cube, what functions we will need (we are going to have 6 arrays, one for each face, to represent cube)
+
+1 hour 5-6pm on Tuesday - watched a couple python tutorials on youtube
+
+2 hours 6-8pm on Wednesday - messed around in python for a bit, learning how to iterate through arrays and such
+
+2 hour 7-8pm on Thursday - read some stuff on some python, more videos, wrote practice program
+
+
+Summary and next steps: 
+
+This challenge was helpful since it forced me to get a start on learning some python before we get into the actual coding part of our project. We also spent a lot of the past week
+debating how we want to represent the rubik's cube, and I'm glad that is resolved. We have also split the upcoming work between each other: functions, constructor, file management, user-side stuff, etc.
+We hope to have something that is able to be interacted with a user in a couple of weeks. 
