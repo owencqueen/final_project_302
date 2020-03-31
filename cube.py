@@ -20,26 +20,70 @@ def check_cube(self, precedence, direction):
 		
 		# Our line of faces is: u l d r
 		
-		if (direction == "regular"):
-			temp = []
-			
-			# Go to far right of r face
+		# To be rotated:
+		#  1. Top of u
+		#  2. Bottom of d
+		#  3. Left of l
+		#  4. Right of r
 
-			for i in range(0, len(r[0])):
-				temp.append(r[i][len(r[0])])
+		if (direction == "regular"):
+			for i in range(0, self.dim):
+				temp_val = self.r[i][self.dim]
+				self.r[i][self.dim] = self.d[self_dim][i]
+				self.d[self_dim][i] = self.l[i][0]
+				self.l[i][0] = self.u[0][i]
+				self.u[0][i] = temp_val
+			
+		else:
+			for i in range(0, self.dim):
+				temp_val = self.r[i][self.dim]
+				self.r[i][self.dim] = self.u[0][i]
+				self.u[0][i] = self.l[i][0]
+				self.l[i][0] = self.d[self.dim][i]
+				self.d[self.dim][i] = temp_val
+			
 				
 
 	elif (precedence == "f"):
 		B = 0
+		# To be rotated:	
+		#  1. Bottom of u	
+		#  2. Left of r
+		#  3. Top of d
+		#  4. Right of l
+
+		if (direction == "regular":
+			for i in range(0, self.dim):
+				temp_val = self.r[i][0]
+				self.r[i][0] = self.u[self.dim][i]
+				self.u[self.dim][i] = self.l[i][self.dim]
+				self.l[i][self.dim] = self.d[0][i]
+				self.d[0][i] = temp_val
+		else:
+			for i in range(0, self.dim):
+				temp_val = self.r[i][0]
+				self.r[i][0] = self.d[0][i]
+				self.d[0][i] = self.l[i][self.dim]
+				self.l[i][self.dim] = self.u[self.dim][i]
+				self.u[self_dim][i] = temp_val
+
+
 	elif (precedence == "l"):
 		R = 0
 	elif (precedence == "r"):
 		L = 0
+		if (direction == "regular"):
+			
+		else:
+
+
+
 	elif (precedence == "u"):
 		D = 0
 		
 		temp = self.f[0]
 
+		# We're moving the top ccw
 		if (direction == "regular"):	
 			for i in range(0, self.dim):
 				self.f[0][i] = self.r[0][i]
@@ -47,7 +91,7 @@ def check_cube(self, precedence, direction):
 				self.b[0][i] = self.l[0][i]
 				self.l[0][i] = temp[i]
 		
-		else:
+		else: # We're moving the top cw
 			for i in range(0, self.dim):
 				self.f[0][i] = self.l[0][i]
 				self.l[0][i] = self.b[0][i]
