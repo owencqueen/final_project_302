@@ -118,4 +118,42 @@ def check_cube(self, precedence, direction):
 				self.b[ind][i] = self.r[ind][i]
 				self.r[ind][i] = temp[i]
 
+def if_solved():
+
+	check = 1
+
+	for i in f:
+		color = f[0]
+		if(color != i):
+			check = 0
+
+	for i in b:
+		color = b[0]
+		if(color != i):
+			check = 0
+
+	for i in u:
+		color = u[0]
+		if(color != i):
+			check = 0
+
+	for i in d:
+		color = d[0]
+		if(color != i):
+			check = 0
+
+	for i in l:
+		color = l[0]
+		if(color != i):
+			check = 0
+
+	for i in r:
+		color = r[0]
+		if(color != i):
+			check = 0
+
+	if(check == 1):
+		print("Solved")
+	else:
+		print("Not Solved")
 
