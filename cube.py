@@ -233,3 +233,46 @@ def if_solved():
 	else:
 		print("Not Solved")
 
+def random_move():
+
+	    check = random.randint(1, 12)
+
+		if(check == 1) {
+			front()
+		}
+		elif (check == 2) {
+			front_prime()
+		}
+		elif (check == 3) {
+			back()
+		}
+		elif (check == 4) {
+			back_prime()
+		}
+		elif (check == 5) {
+			up()
+		}
+		elif (check == 6) {
+			up_prime()
+		}
+		elif (check == 7) {
+			down()
+		}
+		elif (check == 8) {
+			down_prime()
+		}
+		elif (check == 9) {
+			left()
+		}
+		elif (check == 10) {
+			left_prime()
+		}
+		elif (check == 11) {
+			right()
+		}
+		elif (check == 12) {
+			right_prime()
+		}
+	
+	
+
