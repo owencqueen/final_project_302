@@ -153,44 +153,32 @@ def shuffle():
 
 	while(rotations > 0):
 
-	    check = random.randint(1, 12)
+		check = random.randint(1, 12)
 
-		if(check == 1) {
+		if (check == 1):
 			front()
-		}
-		elif (check == 2) {
+		elif (check == 2):
 			front_prime()
-		}
-		elif (check == 3) {
+		elif (check == 3):
 			back()
-		}
-		elif (check == 4) {
+		elif (check == 4):
 			back_prime()
-		}
-		elif (check == 5) {
+		elif (check == 5):
 			up()
-		}
-		elif (check == 6) {
+		elif (check == 6):
 			up_prime()
-		}
-		elif (check == 7) {
+		elif (check == 7):
 			down()
-		}
-		elif (check == 8) {
+		elif (check == 8):
 			down_prime()
-		}
-		elif (check == 9) {
+		elif (check == 9):
 			left()
-		}
-		elif (check == 10) {
+		elif (check == 10):
 			left_prime()
-		}
-		elif (check == 11) {
+		elif (check == 11):
 			right()
-		}
-		elif (check == 12) {
+		elif (check == 12):
 			right_prime()
-		}
 
 		rotations -= 1
 
