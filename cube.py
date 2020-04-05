@@ -1,6 +1,77 @@
 import random
 
+def cube_upp(self):
+	rotate(self, "u", "cw")
+def cube_upp_p(self):
+	rotate(self, "u", "ccw")
+def cube_ri(self):
+	rotate(self, "r", "cw")
+def cube_ri_p(self):
+	rotate(self, "r", "ccw")
+def cube_fr(self):
+	rotate(self, "f", "cw")
+def cube_fr_p(self):
+	rotate(self, "f", "ccw")
+def cube_do(self):
+	rotate(self, "d", "cw")
+def cube_do_p(self):
+	rotate(self, "d", "ccw")
+def cube_le(self):
+	rotate(self, "l", "cw")
+def cube_le_p(self):
+	rotate(self, "l", "ccw")
+def cube_ba(self):
+	rotate(self, "b", "cw")
+def cube_ba_p(self):
+	rotate(self, "b", "ccw")
 
+
+# Rotate a specific face of the cube
+# option is either "ccw" or "cw"
+def rotate(self, face, option):
+	
+	if ((option != "ccw") or  (option != "cw")):
+		print("Wrong option")
+		return -1
+	
+	# Decide which face will be turned
+	if   (face == "u"):
+		self.u = move_around(self.u, option)
+	elif (face == "r"):
+		self.r = move_around(self.r, option)
+	elif (face == "f"):
+		self.f = move_around(self.f, option)
+	elif (face == "d"):
+		self.d = move_around(self.d, option)
+	elif (face == "l"):
+		self.l = move_around(self.l, option)
+	elif (face == "b"):
+		self.b = move_around(self.b, option)
+
+	if (option == "ccw"):	
+		self = check_cube(self, face, "regular")
+	else:
+		self = check_cube(self, face, "regular") 
+	
+	return self
+	
+def move_around(face, option):
+	if (option == "cw"):
+		temp = face[0][0]
+		face[0][0] = face[1][0]
+		face[1][0] = face[1][1]
+		face[1][1] = face[0][1]
+		face[0][1] = temp
+	else:
+		temp = face[0][0]
+		face[0][0] = face[0][1]
+		face[0][1] = face[1][1]
+		face[1][1] = face[1][0]
+		face[1][0] = temp
+	
+	return face
+	
+# Changes all the values around a rotated face after rotation
 def check_cube(self, precedence, direction):
 	
 	# Numeric variable for each face
@@ -149,70 +220,74 @@ def check_cube(self, precedence, direction):
 				self.b[ind][i] = self.r[ind][i]
 				self.r[ind][i] = temp[i]
 
-def shuffle():
+		return self
+
+# Shuffles the cube (calls random moves repeatedly)
+def cube_shuffle(self, rotations):
 
 	while(rotations > 0):
 
 		check = random.randint(1, 12)
 
 		if (check == 1):
-			front()
+			self.front()
 		elif (check == 2):
-			front_prime()
+			self.front_prime()
 		elif (check == 3):
-			back()
+			self.back()
 		elif (check == 4):
-			back_prime()
+			self.back_prime()
 		elif (check == 5):
-			up()
+			self.up()
 		elif (check == 6):
-			up_prime()
+			self.up_prime()
 		elif (check == 7):
-			down()
+			self.down()
 		elif (check == 8):
-			down_prime()
+			self.down_prime()
 		elif (check == 9):
-			left()
+			self.left()
 		elif (check == 10):
-			left_prime()
+			self.left_prime()
 		elif (check == 11):
-			right()
+			self.right()
 		elif (check == 12):
-			right_prime()
+			self.right_prime()
 
 		rotations -= 1
 
-def if_solved():
+# Checks if the cube has been solved
+def cube_if_solved(self):
 
 	check = 1
 
-	for i in f:
-		color = f[0]
+	for i in self.f:
+		color = self.f[0]
 		if(color != i):
 			check = 0
 
-	for i in b:
-		color = b[0]
+	for i in self.b:
+		color = self.b[0]
 		if(color != i):
 			check = 0
 
-	for i in u:
-		color = u[0]
+	for i in self.u:
+		color = self.u[0]
 		if(color != i):
 			check = 0
 
-	for i in d:
-		color = d[0]
+	for i in self.d:
+		color = self.d[0]
 		if(color != i):
 			check = 0
 
-	for i in l:
-		color = l[0]
+	for i in self.l:
+		color = self.l[0]
 		if(color != i):
 			check = 0
 
-	for i in r:
-		color = r[0]
+	for i in self.r:
+		color = self.r[0]
 		if(color != i):
 			check = 0
 
@@ -223,46 +298,35 @@ def if_solved():
 		print("Not Solved")
 		return 0
 
-def random_move():
+# Makes a random move on the cube
+def cube_random_move(self):
 
-	    check = random.randint(1, 12)
+	check = random.randint(1, 12)
 
-		if(check == 1) {
-			front()
-		}
-		elif (check == 2) {
-			front_prime()
-		}
-		elif (check == 3) {
-			back()
-		}
-		elif (check == 4) {
-			back_prime()
-		}
-		elif (check == 5) {
-			up()
-		}
-		elif (check == 6) {
-			up_prime()
-		}
-		elif (check == 7) {
-			down()
-		}
-		elif (check == 8) {
-			down_prime()
-		}
-		elif (check == 9) {
-			left()
-		}
-		elif (check == 10) {
-			left_prime()
-		}
-		elif (check == 11) {
-			right()
-		}
-		elif (check == 12) {
-			right_prime()
-		}
+	if(check == 1):
+		self.front()
+	elif (check == 2)
+		self.front_prime():
+	elif (check == 3):
+		self.back()
+	elif (check == 4):
+		self.back_prime()
+	elif (check == 5):
+		self.up()
+	elif (check == 6):
+		self.up_prime()
+	elif (check == 7):
+		self.down()
+	elif (check == 8):
+		self.down_prime()
+	elif (check == 9):
+		self.left()
+	elif (check == 10):
+		self.left_prime()
+	elif (check == 11);
+		self.right()
+	elif (check == 12):
+		self.right_prime()
 	
 	
 
