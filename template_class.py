@@ -2,9 +2,13 @@ import cube
 
 class rubiks_cube:
 	
+	def __init__():
+		pass
 	def __init__(self):
 		self.check_cube = cube.check_cube
+		
 		dim = 2 # Defines the dimension of the cube; need it for check_cube
+		
 
 	f = []
 	b = []
@@ -17,6 +21,7 @@ class rubiks_cube:
 		pass
 		# Does the brunt of the work
 		# Reorders the cubes to move where they need to 
+		
 
 	def rotate(face, direction):
 		pass
@@ -31,9 +36,8 @@ class rubiks_cube:
 		pass
 	def back():
 		pass
-	def back_prime():
+	def back_prime():	
 		pass
-	
 	def up():
 		pass
 	def up_prime():
@@ -42,7 +46,6 @@ class rubiks_cube:
 		pass
 	def down_prime():
 		pass
-
 	def left():
 		pass
 	def left_prime():

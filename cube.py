@@ -218,8 +218,10 @@ def if_solved():
 
 	if(check == 1):
 		print("Solved")
+		return 1
 	else:
 		print("Not Solved")
+		return 0
 
 def random_move():
 
