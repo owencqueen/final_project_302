@@ -92,11 +92,11 @@ def in_handler(cube, cmmd):
 	elif cmmd.lower() == "reset":
 #		cube.clear()
 		print(" Cube reset.\n")
-		pass
 	
 	elif cmmd.lower() == "print":
-#		print_cube(cube)
-		pass
+		if not print_cube(cube):
+			print("\n Something went wrong.\n")
+			return
 	
 	elif cmmd.lower() == "shuffle":	
 		i = input(" How many rotations for shuffle?\n")
@@ -104,7 +104,7 @@ def in_handler(cube, cmmd):
 		
 		if i.isnumeric():
 #			cube.shuffle(i)
-			print('\n Shuffled' + i + 'amount of times. \n')
+			print('\n Shuffled' + i + 'amount of times.\n')
 		else:
 			print("\n Can't shuffle", i, "amount of times.\n")	
 
@@ -205,8 +205,41 @@ def do_moves(cube, move_list):
 	
 	return 1
 
+def print_face(face):
+	
+	if face == '\n':
+		print(face)
+	
+	return 1
+
+
 def print_cube(cube):
-	pass
+
+
+#	f = cube.f
+	f = [ ['r', 'r'], ['r', 'r'] ]
+#	b = cube.b
+	b = [ ['o', 'o'], ['o', 'o'] ]
+#	u = cube.u
+	u = [ ['w', 'w'], ['w', 'w'] ]
+#	d = cube.d
+	d = [ ['y', 'y'], ['y', 'y'] ]
+#	l = cube.l
+	l = [ ['g', 'g'], ['g', 'g'] ]
+#	r = cube.r
+	r = [ ['b', 'b'], ['b', 'b'] ]
+	
+	empty_face = [[' ',' '],[' ',' ']]
+
+	print_queue = [empty_face, u, '\n', l, f, r, b, '\n', empty_face, d]
+
+
+	for i in print_queue:
+		
+		if not print_face(i):
+			return 0;
+	
+	return 1
 
 def is_rot(letter):
 
