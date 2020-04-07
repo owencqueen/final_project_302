@@ -91,6 +91,7 @@ def in_handler(cube, cmmd):
 	
 	elif cmmd.lower() == "reset":
 #		cube.clear()
+		print(" Cube reset.\n")
 		pass
 	
 	elif cmmd.lower() == "print":
@@ -118,13 +119,91 @@ def in_handler(cube, cmmd):
 			return
 
 		print()
-		read_rotations(rots)
+		if read_rotations(cube, rots):
+			print(" Rotations read.\n")
+			return
+		else:
+			print(" Couldn't read rotation command(s).\n")
 	else:
 		print(unk_cm)
 		return
 
-def do_moves(move_list):
-	pass
+def do_moves(cube, move_list):
+
+	rot = 0
+
+	for i in move_list:
+		
+		try:
+			num_rot = int(i[2])
+		except:
+			num_rot = 1
+
+		try:
+			t = i[1]
+			if t == "'":
+				isP = 1
+			else:
+				num_rot = int(t)
+				isP = 0
+		except:
+			isP = 0
+
+
+		if i[0] == 'l':
+			if isP:
+#				rot = cube.left_prime
+				pass
+			else:
+#				rot = cube.left
+				pass
+		
+		elif i[0] == 'r':
+			if isP:
+#				rot = cube.right_prime
+				pass
+			else:
+#				rot = cube.right
+				pass
+
+		elif i[0] == 'u':
+			if isP:
+#				rot = cube.up_prime
+				pass
+			else:
+#				rot = cube.up
+				pass
+		
+		elif i[0] == 'd':
+			if isP:
+#				rot = cube.down_prime
+				pass
+			else:
+#				rot = cube.down
+				pass
+	
+		elif i[0] == 'b':
+			if isP:
+#				rot = cube.back_prime
+				pass
+			else:
+#				rot = cube.back
+				pass
+
+		elif i[0] == 'f':
+			if isP:
+#				rot = cube.front_prime
+				pass
+			else:
+#				rot = cube.front
+				pass
+
+		while num_rot > 0:
+			if rot != 0:
+				rot()
+			num_rot -= 1
+	
+	return 1
 
 def print_cube(cube):
 	pass
@@ -136,64 +215,90 @@ def is_rot(letter):
 	if i.isalpha() and (i == 'l' or i == 'r'\
 		or i == 'u' or i == 'd' or i == 'b' \
 		or i == 'f'):
+		
 		return 1
 	else:
 		return 0
 
-def read_rotations(rots):
+def read_rotations(cube, rots):
 	err = 0
 	rot_list = []
 	
+
 	# Enter first command
 	if is_rot(rots[0]):
 		temp = [rots[0] ]
 	else:
 		return 0
+	
+
+
+	if len(rots) < 2:
+		if do_moves(cube, temp):
+			return 1
+
 
 	for i in rots[1:]:
 		
 		# Letter case
-		if i.isalpha() and (i.lower() == 'l' or i.lower() == 'r' \
-			or i.lower() == 'u' or i.lower() == 'd' or i.lower() == 'b'\
-			or i.lower() == 'f'):
-		
+		if is_rot(i):
 			# Add previous
 			rot_list.append(temp)
-			temp = []
-			
+			temp = []	
 			# Add current 
-			temp.append[i]
+			temp.append(i)
 
 		# Prime case
 		elif i == "'" and temp != []:
-			
 			# Get character
-			t = temp[0].lower()
-
-			
-			if not (t.isalpha() and (t == 'l' or t == 'r'\
-				or t == 'u' or t == 'd' or t == 'b'  \
-				or t == 'f') ):
+			try:
+				t = temp[0].lower()
+			except:
+				return 0
+			# Check command in temp
+			if not is_rot(t):
 				err = 1
-			
 			else:
-				pass
+				temp.append(i)
+
+		# Number case
+		elif i.isnumeric():
+			# Get rotation
+			try:
+				t1 = temp[0].lower()
+			except:
+				return 0
+			# Get prime
+			try:
+				t2 = temp[1].lower()
+				can_t2 = 1
+			except:
+				can_t2 = 0
+			# Check commands in temp
+			if not is_rot(t1) or (can_t2 and t2 != "'"):
+				err = 1
+			else:
+				temp.append(i)
+		
+		elif i == ' ':
+			pass
+		else:
+			err = 1
+		
+		if err:
+			return 0
+
+	# Add last rotation to list
+	if temp != []:
+		rot_list.append(temp)
+
+	# Call commands
+	if rot_list != []:
+		if do_moves(cube, rot_list):
+			return 1
+	else:
+		return 0
 
 
-		# Letter Number case
-#		elif i == "'":
-#			pass
-#		# Letter Number Prime case
-#		elif i == "":
-#			pass
-#		else:
-#			err = 1
-#		
-#		if err:
-#			print(unk_cm)
-#			return
-
-#	if rot_list != []:
-#		do_moves(rot_list)
-
+# Call Main
 main()
