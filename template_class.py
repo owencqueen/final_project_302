@@ -23,24 +23,24 @@ class rubiks_cube:
 	# however, you don't have to call them w/ self
 	# Ex: front()
 
-	front       = cube_fr
-	front_prime = cube_fr_p
-	back        = cube_ba
-	back_prime  = cube_ba_p
-	up          = cube_upp
-	up_prime    = cube_upp_p
-	down        = cube_do
-	down_prime  = cube_do_p
-	left        = cube_le
-	left_prime  = cube_le_p
-	right       = cube_ri
-	right_prime = cube_ri_p
+	front       = cube.cube_fr
+	front_prime = cube.cube_fr_p
+	back        = cube.cube_ba
+	back_prime  = cube.cube_ba_p
+	up          = cube.cube_upp
+	up_prime    = cube.cube_upp_p
+	down        = cube.cube_do
+	down_prime  = cube.cube_do_p
+	left        = cube.cube_le
+	left_prime  = cube.cube_le_p
+	right       = cube.cube_ri
+	right_prime = cube.cube_ri_p
 
 	# Declarations of other helper functions:
 		
-	if_solved   = cube_if_solved
+	if_solved   = cube.cube_if_solved
 		# Checks if the cube is solved (returns bool)
 		# Fn call syntax: if_solved()
-	shuffle     = cube_shuffle
+	shuffle     = cube.cube_shuffle
 		# Shuffles the cube (calls random moves for given number of rotations)
 		# Fn call syntax: shuffle(rotations)
