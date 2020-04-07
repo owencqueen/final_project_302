@@ -1,6 +1,7 @@
 # Definition of the rubiks_cube class
 
 import cube
+import solver_helpers
 
 class rubiks_cube:
 	
@@ -43,6 +44,3 @@ class rubiks_cube:
 	shuffle     = cube_shuffle
 		# Shuffles the cube (calls random moves for given number of rotations)
 		# Fn call syntax: shuffle(rotations)
-	random_move = cube_random_move
-		# Makes a random move (for use of RL agent)
-		# Fn call syntax: random_move()
