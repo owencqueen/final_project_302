@@ -298,35 +298,3 @@ def cube_if_solved(self):
 		print("Not Solved")
 		return 0
 
-# Makes a random move on the cube
-def cube_random_move(self):
-
-	check = random.randint(1, 12)
-
-	if(check == 1):
-		self.front()
-	elif (check == 2):
-		self.front_prime()
-	elif (check == 3):
-		self.back()
-	elif (check == 4):
-		self.back_prime()
-	elif (check == 5):
-		self.up()
-	elif (check == 6):
-		self.up_prime()
-	elif (check == 7):
-		self.down()
-	elif (check == 8):
-		self.down_prime()
-	elif (check == 9):
-		self.left()
-	elif (check == 10):
-		self.left_prime()
-	elif (check == 11):
-		self.right()
-	elif (check == 12):
-		self.right_prime()
-	
-	
-
