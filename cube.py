@@ -305,8 +305,8 @@ def cube_random_move(self):
 
 	if(check == 1):
 		self.front()
-	elif (check == 2)
-		self.front_prime():
+	elif (check == 2):
+		self.front_prime()
 	elif (check == 3):
 		self.back()
 	elif (check == 4):
@@ -323,7 +323,7 @@ def cube_random_move(self):
 		self.left()
 	elif (check == 10):
 		self.left_prime()
-	elif (check == 11);
+	elif (check == 11):
 		self.right()
 	elif (check == 12):
 		self.right_prime()
