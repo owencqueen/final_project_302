@@ -2,7 +2,7 @@
 # Text-based User Interfacing
 
 import sys
-#import template_class
+from template_class import rubiks_cube
 import check_cube
 
 
@@ -24,7 +24,7 @@ intro = 'Welcome to a text-based Cube Interface!\nType "help" to see a list of c
 
 enter = " Enter a command:\n"
 
-unk_cm = '\n Unknown command.\n Type "help" to see a list of commands.\n'
+unk_cm = ' Unknown command.\n Type "help" to see a list of commands.\n'
 
 
 
@@ -59,8 +59,7 @@ def main():
 
 # Program Start
 	# Declare Cube
-#	cube = rubiks_cube()
-	cube = 0
+	cube = rubiks_cube()
 
 	# Print Intro Text
 	print(intro)
@@ -90,12 +89,15 @@ def in_handler(cube, cmmd):
 		print(help_cmd)
 	
 	elif cmmd.lower() == "reset":
-#		cube.clear()
+		cube = rubiks_cube()
 		print(" Cube reset.\n")
 	
 	elif cmmd.lower() == "print":
 		if not print_cube(cube):
-			print("\n Something went wrong.\n")
+			print(" Something went wrong.\n")
+			return
+		else:
+			print()
 			return
 	
 	elif cmmd.lower() == "shuffle":	
@@ -103,14 +105,17 @@ def in_handler(cube, cmmd):
 		print()
 		
 		if i.isnumeric():
-#			cube.shuffle(i)
-			print('\n Shuffled' + i + 'amount of times.\n')
+			cube.shuffle(int(i) )
+			print(' Shuffled ' + i + ' amount of times.\n')
 		else:
-			print("\n Can't shuffle", i, "amount of times.\n")	
+			print(" Can't shuffle", i, "amount of times.\n")	
 
 	elif cmmd.lower() == "solved":
-#		cube.if_solved()
-		pass
+		print(" Status of cube is: ")
+		cube.if_solved()
+		print()
+		return
+		
 	elif cmmd.lower() == "rotate":
 		rots = input(" List your rotations:\n")
 		
@@ -152,51 +157,39 @@ def do_moves(cube, move_list):
 
 		if i[0] == 'l':
 			if isP:
-#				rot = cube.left_prime
-				pass
+				rot = cube.left_prime
 			else:
-#				rot = cube.left
-				pass
+				rot = cube.left
 		
 		elif i[0] == 'r':
 			if isP:
-#				rot = cube.right_prime
-				pass
+				rot = cube.right_prime
 			else:
-#				rot = cube.right
-				pass
+				rot = cube.right
 
 		elif i[0] == 'u':
 			if isP:
-#				rot = cube.up_prime
-				pass
+				rot = cube.up_prime
 			else:
-#				rot = cube.up
-				pass
+				rot = cube.up
 		
 		elif i[0] == 'd':
 			if isP:
-#				rot = cube.down_prime
-				pass
+				rot = cube.down_prime
 			else:
-#				rot = cube.down
-				pass
+				rot = cube.down
 	
 		elif i[0] == 'b':
 			if isP:
-#				rot = cube.back_prime
-				pass
+				rot = cube.back_prime
 			else:
-#				rot = cube.back
-				pass
+				rot = cube.back
 
 		elif i[0] == 'f':
 			if isP:
-#				rot = cube.front_prime
-				pass
+				rot = cube.front_prime
 			else:
-#				rot = cube.front
-				pass
+				rot = cube.front
 
 		while num_rot > 0:
 			if rot != 0:
@@ -205,29 +198,27 @@ def do_moves(cube, move_list):
 	
 	return 1
 
-def print_face(face):
+def print_face(face, dim):
+
 	
 	if face == '\n':
-		print(face)
+		print()
+	else:
+		print(face)		
 	
-	return 1
+	return [0,0]
 
 
 def print_cube(cube):
 
+	dim = cube.dim
 
-#	f = cube.f
-	f = [ ['r', 'r'], ['r', 'r'] ]
-#	b = cube.b
-	b = [ ['o', 'o'], ['o', 'o'] ]
-#	u = cube.u
-	u = [ ['w', 'w'], ['w', 'w'] ]
-#	d = cube.d
-	d = [ ['y', 'y'], ['y', 'y'] ]
-#	l = cube.l
-	l = [ ['g', 'g'], ['g', 'g'] ]
-#	r = cube.r
-	r = [ ['b', 'b'], ['b', 'b'] ]
+	f = cube.f
+	b = cube.b
+	u = cube.u
+	d = cube.d
+	l = cube.l
+	r = cube.r
 	
 	empty_face = [[' ',' '],[' ',' ']]
 
@@ -236,8 +227,10 @@ def print_cube(cube):
 
 	for i in print_queue:
 		
-		if not print_face(i):
-			return 0;
+		to_print = print_face(i, dim)
+
+		if to_print[0] == 1:
+			print(to_print[1])
 	
 	return 1
 
