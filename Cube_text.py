@@ -106,7 +106,7 @@ def in_handler(cube, cmmd):
 		
 		if i.isnumeric():
 			cube.shuffle(int(i) )
-			print(' Shuffled ' + i + ' amount of times.\n')
+			print(' Shuffled ' + i + ' time(s).\n')
 		else:
 			print(" Can't shuffle", i, "amount of times.\n")	
 
