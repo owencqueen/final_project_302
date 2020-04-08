@@ -30,7 +30,7 @@ def cube_ba_p(self):
 # option is either "ccw" or "cw"
 def rotate(self, face, option):
 	
-	if ((option != "ccw") or  (option != "cw")):
+	if ((option != "ccw") and  (option != "cw")):
 		print("Wrong option")
 		return -1
 	
@@ -51,7 +51,7 @@ def rotate(self, face, option):
 	if (option == "ccw"):	
 		self = check_cube(self, face, "regular")
 	else:
-		self = check_cube(self, face, "regular") 
+		self = check_cube(self, face, "other") 
 	
 	return self
 	
