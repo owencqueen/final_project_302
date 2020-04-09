@@ -34,3 +34,7 @@ def random_move(cube):
 def moves(cube):
 	mvs = [ cube.front(), cube.front_prime(), cube.back(), cube.back_prime(), cube.up(), cube.up_prime(), cube.down(), cube.down_prime(), cube.left(), cube.left_prime(), cube.right(), cube.right_prime() ]
 	return mvs
+
+def names_of_moves():
+	mvs = [ "F", "F`", "B", "B`", "U", "U`", "D", "D`", "L", "L`", "R", "R`" ]
+	return mvs
