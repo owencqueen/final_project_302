@@ -261,28 +261,28 @@ def cube_if_solved(self):
 
 	check = 1
 
-	if(self.f[0][0] != self.f[0][1] || self.f[0][1] != self.f[1][0] || self.f[1][0] != self.f[1][1]) {
+	if(self.f[0][0] != self.f[0][1] or self.f[0][1] != self.f[1][0] or self.f[1][0] != self.f[1][1]) {
 		check = 0
 	}
 
 
-	if(self.b[0][0] != self.b[0][1] || self.b[0][1] != self.b[1][0] || self.b[1][0] != self.b[1][1]) {
+	if(self.b[0][0] != self.b[0][1] or self.b[0][1] != self.b[1][0] or self.b[1][0] != self.b[1][1]) {
 		check = 0
 	}
 
-	if(self.u[0][0] != self.u[0][1] || self.u[0][1] != self.u[1][0] || self.u[1][0] != self.u[1][1]) {
+	if(self.u[0][0] != self.u[0][1] or self.u[0][1] != self.u[1][0] or self.u[1][0] != self.u[1][1]) {
 		check = 0
 	}
 
-	if(self.d[0][0] != self.d[0][1] || self.d[0][1] != self.d[1][0] || self.d[1][0] != self.d[1][1]) {
+	if(self.d[0][0] != self.d[0][1] or self.d[0][1] != self.d[1][0] or self.d[1][0] != self.d[1][1]) {
 		check = 0
 	}
 
-	if(self.l[0][0] != self.l[0][1] || self.l[0][1] != self.l[1][0] || self.l[1][0] != self.l[1][1]) {
+	if(self.l[0][0] != self.l[0][1] or self.l[0][1] != self.l[1][0] or self.l[1][0] != self.l[1][1]) {
 		check = 0
 	}
 
-	if(self.r[0][0] != self.r[0][1] || self.r[0][1] != self.r[1][0] || self.r[1][0] != self.r[1][1]) {
+	if(self.r[0][0] != self.r[0][1] or self.r[0][1] != self.r[1][0] or self.r[1][0] != self.r[1][1]) {
 		check = 0
 	}
 
