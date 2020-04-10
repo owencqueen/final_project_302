@@ -38,3 +38,28 @@ def moves(cube):
 def names_of_moves():
 	mvs = [ "F", "F`", "B", "B`", "U", "U`", "D", "D`", "L", "L`", "R", "R`" ]
 	return mvs
+
+# Flattens all of the face data into one array
+# Must remain consistent for each flatten
+def flatten_faces(rc):
+	flat = ""
+	around_arr = [ rc.f, rc.r, rc.b, rc.l ]
+
+	for i in around_arr:
+		flat += i[0][0]
+		flat += i[0][1]
+
+	for i in around_arr:
+		flat += i[1][0]
+		flat += i[1][1]
+	
+	around_arr = [ rc.u, rc.d ]
+	
+	for i in around_arr:
+		for j in range(0, 2):
+			for k in range(0, 2):
+				flat += i[j][k]
+
+	return flat
+
+
