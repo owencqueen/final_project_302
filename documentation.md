@@ -1,9 +1,8 @@
 # Documentation
 This is the documentation for this repo. We based our intial structure and notation off of the [standard convention for the Rubik's Cube](http://www.rubiksplace.com/move-notations/).
 ## Rubik's Cube Representation
-### Class Structure
 The class definition for the Rubik's Cube can be found in the template_class.py file. Member functions can be found in the cube.py file. 
-#### 1. Face representations
+### 1. Face representations
 Here is the initial state and orientation of each face. This is based off of our standard convention for the setup of the cube found above under the "Documentation" heading. </br>
 #### Orientation
 Orientation in space based off of conventional 2D representation of the cube [found here](https://www.codewars.com/kata/5b3bec086be5d8893000002e):
@@ -33,7 +32,7 @@ If you want to access the individual blocks in the cube, you can use the below m
                 +---------------+
 ```
 
-##### Color codes:
+#### Color codes:
 
 | Char | Color |
 | ---- | ----- |
@@ -43,45 +42,45 @@ If you want to access the individual blocks in the cube, you can use the below m
 | y | Yellow |
 | g | Green |
 | b | Blue |
-##### Initial values of each face
+#### Initial values of each face
 These are the initial values of each face as intialized in the constructor.
-###### Front
+##### Front
 - f in template_class.py
 ```
 [ ['r', 'r'],
   ['r', 'r'] ]
 ```
-###### Back
+##### Back
 - b in template_class.py
 ```
 [ ['o', 'o'],
   ['o', 'o'] ]
 ```
-###### Up
+##### Up
 - u in template_class.py
 ```
 [ ['w', 'w'],
   ['w', 'w'] ]
 ```
-###### Down
+##### Down
 - d in template_class.py
 ```
 [ ['y', 'y'],
   ['y', 'y'] ]
 ```
-###### Left
+##### Left
 - l in template_class.py
 ```
 [ ['g', 'g'],
   ['g', 'g'] ]
 ```
-###### Right
+##### Right
 - r in template_class.py
 ```
 [ ['b', 'b'],
   ['b', 'b'] ]
 ```
-#### 2. Move Functions
+### 2. Move Functions
 
   | Class Syntax | Standard Notation |
   |---------------| ------------------|
