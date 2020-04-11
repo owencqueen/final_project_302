@@ -18,7 +18,7 @@ unsupp = 'That size of cube is not supported.'
 
 help_cmd = '\n    Commands:\n  Quit:          "q" or "quit" or "e" or "exit"\n  Reset cube:\
     "reset"\n  Print:         "print"\n  Shuffle:       "shuffle"\n  Rotations:     "rotate"\
-      (Rotation examples: U\'2 or B or l\'2 or D2U1)\n  Check solved:  "solved"\n\n'
+      (Rotation examples: U\'2 or B or l\'2 or D2U1)\n  Check solved:  "check"\n\n'
 
 intro = 'Welcome to a text-based Cube Interface!\nType "help" to see a list of commands.\n'
 
@@ -110,7 +110,7 @@ def in_handler(cube, cmmd):
 		else:
 			print(" Can't shuffle", i, "amount of times.\n")	
 
-	elif cmmd.lower() == "solved":
+	elif cmmd.lower() == "check":
 		print(" Status of cube is: ")
 		cube.if_solved()
 		print()
@@ -198,20 +198,19 @@ def do_moves(cube, move_list):
 	
 	return 1
 
-def print_face(face, dim):
+def print_face(face, to_print, dim):
 
-	
 	if face == '\n':
-		print()
-	else:
-		print(face)		
+		to_print[0] = 1
+		return to_print
 	
-	return [0,0]
+	return to_print
 
 
 def print_cube(cube):
 
 	dim = cube.dim
+	to_print = [0]
 
 	f = cube.f
 	b = cube.b
@@ -226,11 +225,11 @@ def print_cube(cube):
 
 
 	for i in print_queue:
-		
-		to_print = print_face(i, dim)
+
+		to_print = print_face(i, to_print, dim)
 
 		if to_print[0] == 1:
-			print(to_print[1])
+			print()
 	
 	return 1
 
