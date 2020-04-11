@@ -108,6 +108,12 @@ These are the initial values of each face as intialized in the constructor.
 
 ### Interacting with the cube
 ## Solvers
-1. 
 ### Recursive Solver
+## Backend Cube Implementation
+All backend implementation of the Rubik's Cube workings is in cube.py. </br>
+All of the rotation functions came down to two main functions: rotate and check_cube. Each move function calls rotate which then calls check_cube.
+### Rotate
+Rotate simply moves all of the colors on one face in either a clockwise or counterclockwise direction. Given a face, this function performs the rotation of each color on that face in the specified direction
+### Check_cube
+This function is called after the rotation of colors on one face. After the main rotation, this function decides which faces are adjacent to the previously rotated face, and then it rotates the colors on those adjacent faces in the same manner as the previous face was rotated.
 ## User Interaction
