@@ -2,9 +2,9 @@
 This is the documentation for this repo. We based our intial structure and notation off of the [standard convention for the Rubik's Cube](http://www.rubiksplace.com/move-notations/).
 ## Rubik's Cube Representation
 The class definition for the Rubik's Cube can be found in the template_class.py file. Member functions can be found in the cube.py file. 
-### 1. Face representations
-Here is the initial state and orientation of each face. This is based off of our standard convention for the setup of the cube found above under the "Documentation" heading. </br>
-#### Orientation
+### Cube Dimension
+Stored in the "dim" variable is the dimensions of the cube. Currently the only supported dimension is 2x2x2, but we have considered extendind our model to 3x3x3 (the standard size).
+### Orientation
 Orientation in space based off of conventional 2D representation of the cube [found here](https://www.codewars.com/kata/5b3bec086be5d8893000002e):
 ```
       +-----+
@@ -32,7 +32,7 @@ If you want to access the individual blocks in the cube, you can use the below m
                   +-----------------+
 ```
 
-#### Color codes:
+### Color codes:
 
 | Char | Color |
 | ---- | ----- |
@@ -42,40 +42,41 @@ If you want to access the individual blocks in the cube, you can use the below m
 | y | Yellow |
 | g | Green |
 | b | Blue |
-#### Initial values of each face
-These are the initial values of each face as intialized in the constructor in [template_class.py](https://github.com/owencqueen/302_final_project/blob/master/template_class.py).
-##### Front face
+### Faces Represented as 2D Arrays
+These are the initial values of each face as intialized in the constructor in [template_class.py](https://github.com/owencqueen/302_final_project/blob/master/template_class.py). </br>
+Here is the initial state and orientation of each face. This is based off of our standard convention for the setup of the cube found above under the "Documentation" heading. </br>
+#### Front face
 ```
 f = [ ['r', 'r'],
     ['r', 'r'] ]
 ```
-##### Back face
+#### Back face
 ```
 b = [ ['o', 'o'],
     ['o', 'o'] ]
 ```
-##### Up face
+#### Up face
 ```
 u = [ ['w', 'w'],
     ['w', 'w'] ]
 ```
-##### Down face
+#### Down face
 ```
 d = [ ['y', 'y'],
     ['y', 'y'] ]
 ```
-##### Left face
+#### Left face
 ```
 l = [ ['g', 'g'],
     ['g', 'g'] ]
 ```
-##### Right face
+#### Right face
 ```
 r = [ ['b', 'b'],
     ['b', 'b'] ]
 ```
-### 2. Move Functions
-
+## Move Functions
+All move functions are implemented in [cube.py](https://github.com/owencqueen/302_final_project/blob/master/cube.py) (see under "Backend Cube Implementation" below). </br>
   | Class Syntax | Standard Notation |
   |---------------| ------------------|
   | front()       | F                 |
@@ -90,17 +91,13 @@ r = [ ['b', 'b'],
   | left_prime()  | L'                |
   | right()       | R                 |
   | right_prime() | R'                |
- - Each function, when called as a member funcion on a declared object, takes no argument. </br>
+ - Each function, when called as a member funcion on a declared rubiks_cube object, takes no argument. </br>
     - Example:
     ```
     rc = rubiks_cube() # Declaring the object
     rc.front()         # Calling the function to perform F move
     ```
- - The standard Rubik's Cube notation can be found in the link under the "Documentation" header. </br>
- 
-3. 
-
-### Interacting with the cube
+ - All functions are formatted in the the standard Rubik's Cube notation, which can be found in the link under the "Documentation" header. </br>
 ## Solvers
 ### Recursive Solver
 ### Machine Learning Solver
