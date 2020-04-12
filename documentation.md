@@ -109,6 +109,26 @@ These are the initial values of each face as intialized in the constructor.
 ### Interacting with the cube
 ## Solvers
 ### Recursive Solver
+### Machine Learning Solver
+#### Data Generation/ Storage
+The data for this project was stored in .csv files (written using Python csv module). The csv files are of the following general format: 
+```
+state, moves
+rrwb....byy, F
+rryb....gyy, f
+```
+Which is outputted in csv format as: </br>
+![Example of data in csv file](https://github.com/owencqueen/302_final_project/blob/master/data_pic.png)
+</br>
+- The column named "state" is the starting state of the cube after shuffle. </br>
+- The column named "moves" is the code for the moves made by the solver to achieve a solution. </br>
+##### Data Compression
+To compress the data to fit easily in the .csv file, there is:
+1. flatten_faces (link***): this function takes all the data in the faces within the Rubik's Cube and outputs them into a single string.
+2. <function to 
+##### Notes on storage
+1. If a move is capitalized, it is not a prime move.
+2. If a move is lowercase, it is a prime move. 
 ## Backend Cube Implementation
 All backend implementation of the Rubik's Cube workings is in cube.py. </br>
 All of the rotation functions came down to two main functions: rotate and check_cube. Each move function calls rotate which then calls check_cube.
