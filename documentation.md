@@ -43,42 +43,36 @@ If you want to access the individual blocks in the cube, you can use the below m
 | g | Green |
 | b | Blue |
 #### Initial values of each face
-These are the initial values of each face as intialized in the constructor.
-##### Front
-- f in template_class.py
+These are the initial values of each face as intialized in the constructor in [template_class.py](https://github.com/owencqueen/302_final_project/blob/master/template_class.py).
+##### Front face
 ```
-[ ['r', 'r'],
-  ['r', 'r'] ]
+f = [ ['r', 'r'],
+    ['r', 'r'] ]
 ```
-##### Back
-- b in template_class.py
+##### Back face
 ```
-[ ['o', 'o'],
-  ['o', 'o'] ]
+b = [ ['o', 'o'],
+    ['o', 'o'] ]
 ```
-##### Up
-- u in template_class.py
+##### Up face
 ```
-[ ['w', 'w'],
-  ['w', 'w'] ]
+u = [ ['w', 'w'],
+    ['w', 'w'] ]
 ```
-##### Down
-- d in template_class.py
+##### Down face
 ```
-[ ['y', 'y'],
-  ['y', 'y'] ]
+d = [ ['y', 'y'],
+    ['y', 'y'] ]
 ```
-##### Left
-- l in template_class.py
+##### Left face
 ```
-[ ['g', 'g'],
-  ['g', 'g'] ]
+l = [ ['g', 'g'],
+    ['g', 'g'] ]
 ```
-##### Right
-- r in template_class.py
+##### Right face
 ```
-[ ['b', 'b'],
-  ['b', 'b'] ]
+r = [ ['b', 'b'],
+    ['b', 'b'] ]
 ```
 ### 2. Move Functions
 
