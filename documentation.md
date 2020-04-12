@@ -3,6 +3,7 @@ This is the documentation for this repo. We based our intial structure and notat
 ## Rubik's Cube Representation
 The class definition for the Rubik's Cube can be found in the template_class.py file. Member functions can be found in the cube.py file. 
 ### Cube Dimension
+![2x2x2 Rubik's Cube](https://www.grubiks.com/images/puzzles/17/small.png) </br>
 Stored in the "dim" variable is the dimensions of the cube. Currently the only supported dimension is 2x2x2, but we have considered extendind our model to 3x3x3 (the standard size).
 ### Orientation
 Orientation in space based off of conventional 2D representation of the cube [found here](https://www.codewars.com/kata/5b3bec086be5d8893000002e):
@@ -32,7 +33,7 @@ If you want to access the individual blocks in the cube, you can use the below m
                   +-----------------+
 ```
 
-### Color codes:
+### Color codes
 
 | Char | Color |
 | ---- | ----- |
@@ -100,6 +101,9 @@ All move functions are implemented in [cube.py](https://github.com/owencqueen/30
  - All functions are formatted in the the standard Rubik's Cube notation, which can be found in the link under the "Documentation" header. </br>
 ## Solvers
 ### Recursive Solver
+The [recursive_solver.py]() file contains the implementation of a recursive solver to the Rubik's Cube. This solver works in a similar style as Dr. Plank's [sudoku solver](http://web.eecs.utk.edu/~jplank/plank/classes/cs140/Notes/Sudoku/index.html) works.</br>
+</br>
+After testing this solver, we quickly realized that this solution would not be practical. For many reasons such as general time complexity of the solver, we abandoned this brute-force technique. However, the file has been left in the repo for reference.
 ### Machine Learning Solver
 #### Data 
 ##### Storage
