@@ -20,16 +20,16 @@ Orientation in space based off of conventional 2D representation of the cube [fo
 ```
 If you want to access the individual blocks in the cube, you can use the below map for the indices. This map corresponds to the above codes for each face.
 ```
-                +---------------+
-                | [0][0] [0][1] | 
-                | [1][0] [1][1] |
-+---------------+---------------+---------------+---------------+
-| [0][0] [0][1] | [0][0] [0][1] | [0][0] [0][1] | [0][0] [0][1] |
-| [1][0] [1][1] | [1][0] [1][1] | [1][0] [1][1] | [1][0] [1][1] | 
-+---------------+---------------+---------------+---------------+
-                | [0][0] [0][1] | 
-                | [1][0] [1][1] |
-                +---------------+
+                  +-----------------+
+                  | u[0][0] u[0][1] | 
+                  | u[1][0] u[1][1] |
++-----------------+-----------------+-----------------+-----------------+
+| l[0][0] l[0][1] | f[0][0] f[0][1] | r[0][0] r[0][1] | b[0][0] b[0][1] |
+| l[1][0] l[1][1] | f[1][0] f[1][1] | r[1][0] r[1][1] | b[1][0] b[1][1] | 
++-----------------+-----------------+-----------------+-----------------+
+                  | d[0][0] d[0][1] | 
+                  | d[1][0] d[1][1] |
+                  +-----------------+
 ```
 
 #### Color codes:
@@ -110,7 +110,8 @@ These are the initial values of each face as intialized in the constructor.
 ## Solvers
 ### Recursive Solver
 ### Machine Learning Solver
-#### Data Generation/ Storage
+#### Data 
+##### Storage
 The data for this project was stored in .csv files (written using Python csv module). The csv files are of the following general format: 
 ```
 state, moves
@@ -120,15 +121,16 @@ rryb....gyy, f
 Which is outputted in csv format as: </br>
 ![Example of data in csv file](https://github.com/owencqueen/302_final_project/blob/master/data_pic.png)
 </br>
+###### Notes on storage
 - The column named "state" is the starting state of the cube after shuffle. </br>
 - The column named "moves" is the code for the moves made by the solver to achieve a solution. </br>
+- If a move is capitalized, it is not a prime move. </br>
+- If a move is lowercase, it is a prime move.
 ##### Data Compression
 To compress the data to fit easily in the .csv file, there is:
-1. flatten_faces (link***): this function takes all the data in the faces within the Rubik's Cube and outputs them into a single string.
+1. flatten_faces ([solver_helpers.py](https://github.com/owencqueen/302_final_project/blob/master/solver_helpers.py)): this function takes all the data in the faces within the Rubik's Cube and outputs them into a single string.
 2. <function to 
-##### Notes on storage
-1. If a move is capitalized, it is not a prime move.
-2. If a move is lowercase, it is a prime move. 
+ 
 ## Backend Cube Implementation
 All backend implementation of the Rubik's Cube workings is in cube.py. </br>
 All of the rotation functions came down to two main functions: rotate and check_cube. Each move function calls rotate which then calls check_cube.
