@@ -296,3 +296,13 @@ def cube_if_solved(self):
 		print("Not Solved")
 		return 0
 
+def cube_reset(self):
+	
+	self.f = [ ['r', 'r'], ['r', 'r'] ]
+	self.b = [ ['o', 'o'], ['o', 'o'] ]
+	self.u = [ ['w', 'w'], ['w', 'w'] ]
+	self.d = [ ['y', 'y'], ['y', 'y'] ]
+	self.l = [ ['g', 'g'], ['g', 'g'] ]
+	self.r = [ ['b', 'b'], ['b', 'b'] ]	
+
+

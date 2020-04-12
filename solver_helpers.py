@@ -67,6 +67,9 @@ def flatten_faces(rc):
 def counter_move(char_name):
 	
 	mvs = names_of_moves()
+	if char_name not in mvs:
+		print("Name is not a valid move")
+		return 0
 	ind = mvs.index(char_name)
 	
 	if ( ind % 2 == 1 ):
@@ -102,4 +105,29 @@ def counter_move_f(r, char_name):
 	elif (char_name == "R`"):
 		return r.right
 	
+def get_move(r, char_name):
+	if (char_name == "F"):
+		return r.front
+	elif (char_name == "F`"):
+		return r.front_prime	
+	elif (char_name == "B"):
+		return r.back	
+	elif (char_name == "B`"):
+		return r.back_prime	
+	elif (char_name == "U"):
+		return r.up	
+	elif (char_name == "U`"):
+		return r.up_prime	
+	elif (char_name == "D"):
+		return r.down
+	elif (char_name == "D`"):
+		return r.down_prime
+	elif (char_name == "L"):
+		return r.left
+	elif (char_name == "L`"):
+		return r.left_prime
+	elif (char_name == "R"):
+		return r.right
+	elif (char_name == "R`"):
+		return r.right_prime
 

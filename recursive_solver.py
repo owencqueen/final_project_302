@@ -8,10 +8,10 @@ from solver_helpers import counter_move_f
 mvs_ind = [] # Array for indices of the moves made
 names = names_of_moves()
 
-def rec_solve_master(rc, p = 0):
+def rec_solve_master(rc, num_shuf = 14, p = 0):
 
 	turns = moves(rc)
-	rec_solve(rc, 0, turns, 'j') # 'j' dummy argument
+	rec_solve(rc, 0, turns, 'j', num_shuf) # 'j' dummy argument
 
 	if (p): # Prints all names of moves if specified
 		for i in range(0, len(mvs_ind)):
@@ -21,13 +21,13 @@ def rec_solve_master(rc, p = 0):
 			
 
 # Recursive procedure for the rec_solve_master
-def rec_solve(rc, mvs, turns, prev_move):
+def rec_solve(rc, mvs, turns, prev_move, num_shuf = 14):
 	
 	if (rc.if_solved()):
 		return "y"	
 
 	# From the internet - any combo of 2x2 can be solved in >= 14 moves
-	if (mvs > 14):
+	if (mvs > num_shuf):
 		return "n"
 	
 	for i in range(0, 12):
@@ -46,8 +46,8 @@ def rec_solve(rc, mvs, turns, prev_move):
                 #    that makes last move redundant
 		if (prev_move == counter_move( names[i] )):
 			continue	
-		print(i)
-		print("Moves: %d" % mvs)
+		#print(i)
+		#print("Moves: %d" % mvs)
 		turns[i]()                      # Make a move based on incrementing		
 		result = rec_solve(rc, mvs + 1, turns, names[i]) # Run recursion
 		if ( result == "y" ):           # If we've reached a solution
@@ -57,13 +57,15 @@ def rec_solve(rc, mvs, turns, prev_move):
 	return "n"
 
 
+
 # Main function that calls the recursive solver
 def main():
 	r = template_class.rubiks_cube()
 	r.front()
 	r.back()
-	r.down()
-	rec_solve_master(r, 1)
+	r.down_prime()
+	r.front_prime()
+	rec_solve_master(r, 4, 1)
 	# May make this more robust later
 
 main() # Run the main function

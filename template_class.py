@@ -44,3 +44,5 @@ class rubiks_cube:
 	shuffle     = cube.cube_shuffle
 		# Shuffles the cube (calls random moves for given number of rotations)
 		# Fn call syntax: shuffle(rotations)
+	
+	reset = cube.cube_reset
