@@ -106,6 +106,13 @@ The [recursive_solver.py]() file contains the implementation of a recursive solv
 After testing this solver, we quickly realized that this solution would not be practical. For many reasons such as general time complexity of the solver, we abandoned this brute-force technique. However, the file has been left in the repo for reference.
 ### Machine Learning Solver
 #### Data 
+##### Generation
+We generated this data in the file [reverse_shuffle.py](https://github.com/owencqueen/302_final_project/blob/master/reverse_shuffle.py). This file works by prompting the user as so:
+```
+How many rotations? 
+How many shuffles? 
+```
+Rotations denotes the maximum number of times the cube will be rotated when being shuffled. Shuffles denotes the number of shuffles that are performed for each number of rotations in a shuffle. For example, if 20 rotations and 10 shuffles are specified, the program will perform 10 iterations of k rotation(s) shuffles, for k = 1, 2, ..., 20. Thus, the total number of trials performed would be 200 (20 x 10). 
 ##### Storage
 The data for this project was stored in .csv files (written using Python csv module). The csv files are of the following general format: 
 ```
@@ -124,7 +131,7 @@ Which is outputted in csv format as: </br>
 ##### Data Compression
 To compress the data to fit easily in the .csv file, there is:
 1. flatten_faces ([solver_helpers.py](https://github.com/owencqueen/302_final_project/blob/master/solver_helpers.py)): this function takes all the data in the faces within the Rubik's Cube and outputs them into a single string.
-2. <function to 
+2.  
  
 ## Backend Cube Implementation
 All backend implementation of the Rubik's Cube workings is in cube.py. </br>
