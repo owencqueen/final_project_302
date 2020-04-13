@@ -84,10 +84,19 @@ def in_handler(cube, cmmd):
 	
 	if cmmd.lower() == 'help':
 		print(help_cmd)
+		return
 	
 	elif cmmd.lower() == "reset":
-		# Doesn't work
-		print(" Cube reset.\n")
+		
+		cube.f = [ ['r', 'r'], ['r', 'r'] ]
+		cube.b = [ ['o', 'o'], ['o', 'o'] ]
+		cube.u = [ ['w', 'w'], ['w', 'w'] ]
+		cube.d = [ ['y', 'y'], ['y', 'y'] ]
+		cube.l = [ ['g', 'g'], ['g', 'g'] ]
+		cube.r = [ ['b', 'b'], ['b', 'b'] ]
+		
+		(" Cube reset.\n")
+		return
 	
 	elif cmmd.lower() == "print":
 		if not print_cube(cube):
