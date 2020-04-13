@@ -3,7 +3,6 @@
 
 import sys
 from template_class import rubiks_cube
-import check_cube
 
 
 # Commonly Used Strings
@@ -18,15 +17,13 @@ unsupp = 'That size of cube is not supported.'
 
 help_cmd = '\n    Commands:\n  Quit:          "q" or "quit" or "e" or "exit"\n  Reset cube:\
     "reset"\n  Print:         "print"\n  Shuffle:       "shuffle"\n  Rotations:     "rotate"\
-      (Rotation examples: U\'2 or B or l\'2 or D2U1)\n  Check solved:  "solved"\n\n'
+      (Rotation examples: U\'2 or B or l\'2 or D2U1)\n  Check solved:  "check"\n\n'
 
 intro = 'Welcome to a text-based Cube Interface!\nType "help" to see a list of commands.\n'
 
 enter = " Enter a command:\n"
 
 unk_cm = ' Unknown command.\n Type "help" to see a list of commands.\n'
-
-
 
 
 def main():
@@ -87,10 +84,19 @@ def in_handler(cube, cmmd):
 	
 	if cmmd.lower() == 'help':
 		print(help_cmd)
+		return
 	
 	elif cmmd.lower() == "reset":
-		cube = rubiks_cube()
-		print(" Cube reset.\n")
+		
+		cube.f = [ ['r', 'r'], ['r', 'r'] ]
+		cube.b = [ ['o', 'o'], ['o', 'o'] ]
+		cube.u = [ ['w', 'w'], ['w', 'w'] ]
+		cube.d = [ ['y', 'y'], ['y', 'y'] ]
+		cube.l = [ ['g', 'g'], ['g', 'g'] ]
+		cube.r = [ ['b', 'b'], ['b', 'b'] ]
+		
+		(" Cube reset.\n")
+		return
 	
 	elif cmmd.lower() == "print":
 		if not print_cube(cube):
@@ -110,7 +116,7 @@ def in_handler(cube, cmmd):
 		else:
 			print(" Can't shuffle", i, "amount of times.\n")	
 
-	elif cmmd.lower() == "solved":
+	elif cmmd.lower() == "check":
 		print(" Status of cube is: ")
 		cube.if_solved()
 		print()
@@ -198,21 +204,75 @@ def do_moves(cube, move_list):
 	
 	return 1
 
-def print_face(face, dim):
+def padding(face):
+	a = ""
+	for i in face[0]:
+		a += '  '
+	a += ' '	
+	return a
 
-	
+def print_face(face, to_print, dim):
+
 	if face == '\n':
-		print()
+		
+		out = ""
+
+		# Go through and append the lines of the faces to string
+		for i in to_print[1:]:
+
+			out += i
+			out += '\n'
+		
+		# Set ready and append to_print
+		to_print = [1]
+		to_print.append(out)
+
+		return to_print
+
+
+	if len(to_print) < 2:
+		to_print.append(padding(face))
 	else:
-		print(face)		
+		to_print[1] += padding(face)
+
+	index = 2
+
+	for i in face:
+		
+		temp = ""
+		
+		for j in i:
+			temp += ' '
+			temp += j
+		
+		temp += ' '
+
+		# Set value of row
+		if len(to_print) <= index:
+			to_print.append(temp)
+		else:
+			to_print[index] += temp
+
+		index += 1
+
+		# Padding
+		if len(to_print) <= index:
+			to_print.append(padding(face)) 
+		else:
+			to_print[index] += padding(face)
+		
+		index += 1
 	
-	return [0,0]
+	return to_print
 
 
 def print_cube(cube):
 
 	dim = cube.dim
+	to_print = [0]
+	empty_face = [[' ',' '],[' ',' ']]
 
+	# Get cube faces
 	f = cube.f
 	b = cube.b
 	u = cube.u
@@ -220,17 +280,18 @@ def print_cube(cube):
 	l = cube.l
 	r = cube.r
 	
-	empty_face = [[' ',' '],[' ',' ']]
+	# Create list of faces
+	print_queue = [empty_face, u, '\n', l, f, r, b, '\n', empty_face, d, '\n']
 
-	print_queue = [empty_face, u, '\n', l, f, r, b, '\n', empty_face, d]
-
-
+	
+	# Call print_face until ready to print
 	for i in print_queue:
-		
-		to_print = print_face(i, dim)
+
+		to_print = print_face(i, to_print, dim)
 
 		if to_print[0] == 1:
-			print(to_print[1])
+			print(to_print[len(to_print)-1])
+			to_print = [0]
 	
 	return 1
 

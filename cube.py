@@ -49,9 +49,9 @@ def rotate(self, face, option):
 		self.b = move_around(self.b, option)
 
 	if (option == "ccw"):	
-		self = check_cube(self, face, "regular")
+		self = check_cube(self, face, "other")
 	else:
-		self = check_cube(self, face, "other") 
+		self = check_cube(self, face, "regular") 
 	
 	return self
 	
@@ -102,7 +102,7 @@ def check_cube(self, precedence, direction):
 		if (direction == "regular"):
 			for i in range(0, self.dim):
 				temp_val = self.r[i][self.dim - 1]
-				self.r[i][self.dim - 1] = self.d[self_dim - 1][self.dim - i - 1]
+				self.r[i][self.dim - 1] = self.d[self.dim - 1][self.dim - i - 1]
 				self.d[self.dim - 1][self.dim - i - 1] = self.l[self.dim - i - 1][0]
 				self.l[self.dim - i - 1][0] = self.u[0][i]
 				self.u[0][i] = temp_val
@@ -113,7 +113,7 @@ def check_cube(self, precedence, direction):
 				self.r[i][self.dim - 1] = self.u[0][i]
 				self.u[0][i] = self.l[self.dim - i - 1][0]
 				self.l[self.dim - i - 1][0] = self.d[self.dim - 1][self.dim - i - 1]
-				self.d[self.dim - 1][i] = temp_val
+				self.d[self.dim - 1][self.dim - i - 1] = temp_val
 			
 				
 
@@ -129,7 +129,7 @@ def check_cube(self, precedence, direction):
 			for i in range(0, self.dim):
 				temp_val = self.r[i][0]
 				self.r[i][0] = self.u[self.dim - 1][i]
-				self.u[self.dim - 1][i] = self.l[self.dim - i - 1][self.dim]
+				self.u[self.dim - 1][i] = self.l[self.dim - i - 1][self.dim - 1]
 				self.l[self.dim - i - 1][self.dim - 1] = self.d[0][self.dim - i - 1]
 				self.d[0][self.dim - i - 1] = temp_val
 		else:
@@ -138,7 +138,7 @@ def check_cube(self, precedence, direction):
 				self.r[i][0] = self.d[0][self.dim - i - 1]
 				self.d[0][self.dim - i - 1] = self.l[self.dim - i - 1][self.dim - 1]
 				self.l[self.dim - i - 1][self.dim - 1] = self.u[self.dim - 1][i]
-				self.u[self_dim - 1][i] = temp_val
+				self.u[self.dim - 1][i] = temp_val
 
 
 	elif (precedence == "l"):
@@ -165,60 +165,64 @@ def check_cube(self, precedence, direction):
 		L = 0
 		if (direction == "regular"):
 			for i in range(0, self.dim):
-				temp_val = u[self.dim - 1][i]
-				self.u[self.dim - 1][i] = self.f[self.dim - 1][i]
-				self.f[self.dim - 1][i] = self.d[self.dim - 1][i]
-				self.d[self.dim - 1][i] = self.b[0][self.dim - i - 1]
-				self.b[0][self.dim - i - 1] = temp_val
+				temp_val = self.u[i][self.dim - 1]
+				self.u[i][self.dim - 1] = self.f[i][self.dim - 1]
+				self.f[i][self.dim - 1] = self.d[i][self.dim - 1]
+				self.d[i][self.dim - 1] = self.b[self.dim - i - 1][0]
+				self.b[self.dim - i - 1][0] = temp_val
 			
 		else:
 			for i in range(0, self.dim):
-				temp_val = self.u[self.dim - 1][i]
-				self.u[self.dim - 1][i] = self.b[0][self.dim - i - 1]
-				self.b[0][self.dim - i - 1] = self.d[self.dim - 1][i]
-				self.d[self.dim - 1][i] = self.f[self.dim - 1][i]
-				self.f[self.dim - 1][i] = temp_val
+				temp_val = self.u[i][self.dim - 1]
+				self.u[i][self.dim - 1] = self.b[self.dim - i - 1][0]
+				self.b[self.dim - i - 1][0] = self.d[i][self.dim - 1]
+				self.d[i][self.dim - 1] = self.f[i][self.dim - 1]
+				self.f[i][self.dim - 1] = temp_val
 				
 
 	elif (precedence == "u"):
 		D = 0
 		
-		temp = self.f[0]
+		# temp = self.f[0]
 
 		# We're moving the top ccw
 		if (direction == "regular"):	
 			for i in range(0, self.dim):
+				temp_val     = self.f[0][i]
 				self.f[0][i] = self.r[0][i]
 				self.r[0][i] = self.b[0][i]
 				self.b[0][i] = self.l[0][i]
-				self.l[0][i] = temp[i]
+				self.l[0][i] = temp_val
 		
 		else: # We're moving the top cw
 			for i in range(0, self.dim):
+				temp_val     = self.f[0][i]
 				self.f[0][i] = self.l[0][i]
 				self.l[0][i] = self.b[0][i]
 				self.b[0][i] = self.r[0][i]
-				self.r[0][i] = temp[i]
+				self.r[0][i] = temp_val
 
 
 	elif (precedence == "d"):
 		U = 0
 		ind = self.dim - 1
-		temp = self.f[ind]
-
+		#temp = self.f[ind]
+		
 		if (direction == "regular"):	
 			for i in range(0, self.dim):
-				self.f[ind][i] = self.r[ind][i]
-				self.r[ind][i] = self.b[ind][i]
-				self.b[ind][i] = self.l[ind][i]
-				self.l[ind][i] = temp[i]
-		
-		else:
-			for i in range(0, self.dim):
+				temp_val       = self.f[ind][i]
 				self.f[ind][i] = self.l[ind][i]
 				self.l[ind][i] = self.b[ind][i]
 				self.b[ind][i] = self.r[ind][i]
-				self.r[ind][i] = temp[i]
+				self.r[ind][i] = temp_val
+		
+		else:
+			for i in range(0, self.dim):
+				temp_val       = self.f[ind][i]
+				self.f[ind][i] = self.r[ind][i]
+				self.r[ind][i] = self.b[ind][i]
+				self.b[ind][i] = self.l[ind][i]
+				self.l[ind][i] = temp_val
 
 		return self
 
@@ -291,4 +295,14 @@ def cube_if_solved(self):
 	else:
 		print("Not Solved")
 		return 0
+
+def cube_reset(self):
+	
+	self.f = [ ['r', 'r'], ['r', 'r'] ]
+	self.b = [ ['o', 'o'], ['o', 'o'] ]
+	self.u = [ ['w', 'w'], ['w', 'w'] ]
+	self.d = [ ['y', 'y'], ['y', 'y'] ]
+	self.l = [ ['g', 'g'], ['g', 'g'] ]
+	self.r = [ ['b', 'b'], ['b', 'b'] ]	
+
 
