@@ -1,7 +1,6 @@
 #still researching on this
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import train_test_split
 
 
 def get_data(file):
@@ -11,3 +10,10 @@ def get_data(file):
 
 	state = data['state']
 	moves = data['moves']
+
+	state = np.array(state)
+	moves = np.array(moves)
+
+	#thinking we convert each string of 24 letters into 6x2x2
+	#have numbers represent the colors and normalize around 0?
+	#similar thing with moves possibly
