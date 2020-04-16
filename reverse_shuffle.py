@@ -132,6 +132,7 @@ def convert_sol(sol, op = 0):
 				s += sol[i]
 	return s
 
+# Makes each move when shuffle number == 1
 def first_layer_moves(check, rc):
 	if (check == 0):
 		rc.front()
@@ -187,6 +188,7 @@ def main(rot, snum):
 		writer.writerow( [ "state", "moves" ] )
 
 		for j in range(1, rot):
+			# Makes sure that we make every move when the shuffle number is one
 			if (j == 1):
 				for i in range(0, 12):
 					state, sol, r = first_layer_moves(i, r)
@@ -194,7 +196,7 @@ def main(rot, snum):
 					writer.writerow( into )
 					r.reset() 
 	
-			else:
+			else: # When shuffle number is not one
 				for i in range(0, snum):
 					state, sol, r = reverse_shuffle(j)
 					sol = convert_sol(sol)
