@@ -1,4 +1,5 @@
 import random
+import numpy as np
 
 # Makes a random move on the cube
 def random_move(cube):
@@ -130,4 +131,28 @@ def get_move(r, char_name):
 		return r.right
 	elif (char_name == "R`"):
 		return r.right_prime
+
+# Two dimensionalize the data from flatten_faces
+# Returns a numpy array of dimension 2row x 12col
+def two_dim_data(ring):
+
+	top_side = ring[0:8]
+	bot_side = ring[8:16]
+	
+	top_up   = ring[16:18]
+	top_d    = ring[18:20]
+
+	bot_up   = ring[20:22]
+	bot_d    = ring[22:24]
+
+	tp = top_side + top_up + bot_up
+	dn = bot_side + top_d  + bot_d
+
+	whole = tp + dn
+
+	whole = np.array(whole)
+	whole = np.reshape(whole, (2, 12))	
+
+	return whole
+
 
