@@ -207,6 +207,21 @@ flatten_faces(rc)
 	- rc: rubiks_cube() object
 - Return values(s):
 	- flat: One standardized string of the following format:
+```
+s = flatten_faces(rc)
+s indices:
+              +-------------+
+              | s[16] s[17] | 
+              | s[18] s[19] |
++-------------+-------------+-------------+-------------+
+| s[6]  s[7]  | s[0]  s[1]  | s[2]  s[3]  | s[4]  s[5]  |
+| s[14] s[15] | s[8]  s[9]  | s[10] s[11] | s[12] s[13] | 
++-------------+-------------+-------------+-------------+
+              | s[20] s[21] | 
+              | s[22] s[23] |
+              +-------------+
+```
+See representation standards above for the orientation of this diagram.
 
 #### 5. counter_move
 ```
@@ -264,7 +279,17 @@ ch_to_num(ch)
 - Inputs:
 	- ch: character abbreviation of color
 - Return values(s):
-	- Returns a numerical value based off input
+	- Returns a numerical value based off input for the machine learning model
+	- Conversion:
+	
+	| Color code | Numerical value |
+	| ---------- | --------------- |
+	| 'w'        | -1.5            |
+	| 'r'        | -1              |
+	| 'b'        | -0.5            |
+	| 'o'        | 0.5             |
+	| 'g'        | 1               |
+	| 'y'        | 1.5             |
 
 #### 9. two_dim_data
 ```
@@ -275,6 +300,7 @@ two_dim_data(ring)
 - Inputs:
 	- ring: (short for string) string representation of the current state of the cube
 - Return values(s):
-	- numpy array of dimension 2x12 with following representation:
+	- numpy array of numerical representations of each face
+	- Array of dimension 2x12
 
 ## User Interaction
