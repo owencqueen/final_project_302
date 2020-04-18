@@ -290,10 +290,10 @@ def cube_if_solved(self):
 	
 
 	if(check == 1):
-		print("Solved")
+		#print("Solved")
 		return 1
 	else:
-		print("Not Solved")
+		#print("Not Solved")
 		return 0
 
 def cube_reset(self):

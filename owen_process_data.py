@@ -24,9 +24,4 @@ def get_data(file):
 
 	# Split the data for use in the keras model
 	x_train, x_test, y_train, y_test = train_test_split(train_samples, train_labels, test_size = 0.2, random_state = 42)
-
 	return x_train, x_test, y_train, y_test
-
-
-
-
