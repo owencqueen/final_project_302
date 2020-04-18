@@ -133,11 +133,148 @@ To compress the data to fit easily in the .csv file, there is:
 1. flatten_faces ([solver_helpers.py](https://github.com/owencqueen/302_final_project/blob/master/solver_helpers.py)): this function takes all the data in the faces within the Rubik's Cube and outputs them into a single string.
 2.  
  
-## Backend Cube Implementation
+## Backend Cube/ Solvers Implementation
 All backend implementation of the Rubik's Cube workings is in cube.py. </br>
 All of the rotation functions came down to two main functions: rotate and check_cube. Each move function calls rotate which then calls check_cube.
 ### Rotate
 Rotate simply moves all of the colors on one face in either a clockwise or counterclockwise direction. Given a face, this function performs the rotation of each color on that face in the specified direction
 ### Check_cube
 This function is called after the rotation of colors on one face. After the main rotation, this function decides which faces are adjacent to the previously rotated face, and then it rotates the colors on those adjacent faces in the same manner as the previous face was rotated.
+
+### Solver_helpers
+This file contains many of the functions that were used to help in writing the solvers, including the CNN model.
+
+#### Standard indexing system:
+This was the standard method for representing the moves of the cube in characters and integer values.
+
+| Move        | Index     | Character name | Character name adj. |
+| -------     | --------- | -------------- | ------------------- |
+| front       | 0         | F  | F |
+| front_prime | 1         | F` | f |             
+| back        | 2         | B  | B |
+| back_prime  | 3         | B` | b |
+| up          | 4         | U  | U |
+| up_prime    | 5         | U` | u |
+| down        | 6         | D  | D |
+| down_prime  | 7         | D` | d |
+| left        | 8         | L  | L |
+| left_prime  | 9         | L` | l |
+| right       | 10        | R  | R |
+| right_prime | 11        | R` | r |
+| null_move   | 12        | 0  | 0 |
+
+#### 1. random_move
+```
+random_move(cube)
+```
+- General purpose:
+	- Performs a single random move on a given rubiks_cube() object
+- Inputs:
+	- cube: rubiks_cube() object for which you will perform the random move on
+- Return value(s):
+	- No return, just a by reference modification of the cube passed as the argument
+
+#### 2. moves
+```
+moves(cube)
+```
+- General purpose:
+	- Returns move functions for a given rubiks_cube() object
+- Inputs:
+	- cube: singular rubiks_cube() object
+- Return values(s):
+	- mvs: An array of functions for that given cube, based off of the standard indexing system
+
+#### 3. names_of_moves
+```
+name_of_moves()
+```
+- General purpose:
+	- Returns an array of character names of moves (not adjusted)
+- Inputs:
+	- No inputs
+- Return values(s):
+	- Array of character names
+
+#### 4. flatten_faces
+```
+flatten_faces(rc)
+```
+- General purpose:
+	- Converts the state of a rubiks_cube() into a one-dimensional string
+	- For use in building csv data for training the models
+- Inputs:
+	- rc: rubiks_cube() object
+- Return values(s):
+	- flat: One standardized string of the following format:
+
+#### 5. counter_move
+```
+counter_move(char_name)
+```
+- General purpose:
+	- Gets the opposite move of the input
+- Inputs:
+	- char_name: Character name of a move (not adjusted)
+- Return values(s):
+	- Returns the opposite move of the given input
+	- Ex: if input is F, returns F`
+	- Also: if input is F`, returns F
+
+
+#### 6. counter_move_f
+```
+counter_move_f(r, char_name)
+```
+- General purpose: 
+	- Returns a counter function for the given cube that matches the character name (not adj.)
+- Inputs:
+	- r: rubiks_cube() object
+	- char_name: Character name of the move you want the function for
+- Return values(s):
+	- Counter function based off of the given character name
+	- The return function is callable, i.e. not called by the function
+	- Ex:
+```
+f = counter_move_f(rc, ‘B’) # Assigns rc.back to f
+f()                         # Calls rc.back_prime()
+```
+
+#### 7. get_move
+```
+get_move(r, char_name)
+```
+- General purpose:
+	- Returns a move based directly off of the character name (not adj.)
+- Inputs:
+	- r: rubiks_cube() object
+	- char_name: Character name (or index) of the move you are requesting (based off of the standardized indexing system above)
+	
+- Return values(s):
+	- Callable function based off of the corresponding character name (or number)
+	- Similar to example above (counter_move_f)
+
+
+#### 8. ch_to_num
+```
+ch_to_num(ch)
+```
+- General purpose:
+	- Turns a character from the faces of the cube into the number system
+- Inputs:
+	- ch: character abbreviation of color
+- Return values(s):
+	- Returns a numerical value based off input
+
+#### 9. two_dim_data
+```
+two_dim_data(ring)
+```
+- General purpose:
+	- Two-dimensionalizes the string representation of the cube
+- Inputs:
+	- ring: (short for string) string representation of the current state of the cube
+- Return values(s):
+	- numpy array of dimension 2x12 with following representation:
+
 ## User Interaction
