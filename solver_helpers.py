@@ -132,27 +132,81 @@ def get_move(r, char_name):
 	elif (char_name == "R`"):
 		return r.right_prime
 
+	elif (char_name == 0):
+		return r.front
+	elif (char_name == 1):
+		return r.front_prime	
+	elif (char_name == 2):
+		return r.back	
+	elif (char_name == 3):
+		return r.back_prime	
+	elif (char_name == 4):
+		return r.up	
+	elif (char_name == 5):
+		return r.up_prime	
+	elif (char_name == 6):
+		return r.down
+	elif (char_name == 7):
+		return r.down_prime
+	elif (char_name == 8):
+		return r.left
+	elif (char_name == 9):
+		return r.left_prime
+	elif (char_name == 10):
+		return r.right
+	elif (char_name == 11):
+		return r.right_prime
+	
+
+
+# Changes characters into numbers centered about 0
+def ch_to_num(ch):
+
+	if (ch == 'w'):
+		return -1.5
+
+	elif (ch == 'r'):
+		return -1
+
+	elif (ch == 'b'):
+		return -0.5
+
+	elif (ch == 'o'):
+		return 0.5
+
+	elif (ch == 'g'):
+		return 1
+
+	elif (ch == 'y'):
+		return 1.5
+	
+
 # Two dimensionalize the data from flatten_faces
 # Returns a numpy array of dimension 2row x 12col
 def two_dim_data(ring):
 
-	top_side = ring[0:8]
-	bot_side = ring[8:16]
+	top_side = ring[0:8]   # Top of the side faces
+	bot_side = ring[8:16]  # Bottom of the side faces
 	
-	top_up   = ring[16:18]
-	top_d    = ring[18:20]
+	top_up   = ring[16:18] # Upper part of the top
+	top_d    = ring[18:20] # Lower part of the top
 
-	bot_up   = ring[20:22]
-	bot_d    = ring[22:24]
+	bot_up   = ring[20:22] # Upper part of the bottom
+	bot_d    = ring[22:24] # Lower part of the bottom
 
-	tp = top_side + top_up + bot_up
-	dn = bot_side + top_d  + bot_d
+	tp = top_up + top_side + bot_up # Concatenating substrings
+	dn = top_d + bot_side +  bot_d
 
 	whole = tp + dn
+	whole_mat = []
 
-	whole = np.array(whole)
-	whole = np.reshape(whole, (2, 12))	
+	for i in range(0, len(whole)): # Change each character into number
+		whole_mat.append(ch_to_num( whole[i] ))
 
-	return whole
+	whole_mat = np.array(whole_mat)            # Convert to numpy array
+	whole_mat = np.reshape(whole_mat, (2, 12)) # Fix dimension into 2x12 matrix
+
+	return whole_mat
+
 
 
