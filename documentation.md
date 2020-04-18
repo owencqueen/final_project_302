@@ -104,6 +104,14 @@ All move functions are implemented in [cube.py](https://github.com/owencqueen/30
 The [recursive_solver.py]() file contains the implementation of a recursive solver to the Rubik's Cube. This solver works in a similar style as Dr. Plank's [sudoku solver](http://web.eecs.utk.edu/~jplank/plank/classes/cs140/Notes/Sudoku/index.html) works.</br>
 </br>
 After testing this solver, we quickly realized that this solution would not be practical. For many reasons such as general time complexity of the solver, we abandoned this brute-force technique. However, the file has been left in the repo for reference.
+### CNN Solver
+To run the model and create other models:
+1. Get your data
+- You can do this by either runnning rs_one.py or by downloading the 'one_by_one.csv' data set from the Google drive (link in README).
+3. Create a directory called "models"
+2. Run obo_model_driver.py
+- Set the batch size and epoch number
+- Specify the name of the file to be stored in "models" directory
 ### Machine Learning Solver
 #### Data 
 ##### Generation
