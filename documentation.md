@@ -105,6 +105,29 @@ The [recursive_solver.py]() file contains the implementation of a recursive solv
 </br>
 After testing this solver, we quickly realized that this solution would not be practical. For many reasons such as general time complexity of the solver, we abandoned this brute-force technique. However, the file has been left in the repo for reference.
 ### CNN Solver
+When we began this project, we intended to explore using reinforcement learning (RL) to build a solver for the Rubik's Cube. However, after we started researching, we realized that developing a model using RL techniques would be far too time consuming and would require more advanced knowledge of machine learning than we possessed, or had time to learn. Thus, we decided that supervised learning may be the better approach due to the wider availability of Python libraries specifically for supervised rather than unsupervised learning. </br> </br>
+
+After much research, we were able to develop a supervised learning model built on deep neural networks. This model is based on a convolutional neural network ([CNN](https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53)), a type of neural network typically used for image processing. The inspiration for this came from a similar implementation of a [CNN for a sudoku solver](https://towardsdatascience.com/solving-sudoku-with-convolution-neural-network-keras-655ba4be3b11). </br> </br>
+
+Here is the process by which we developed this model:
+
+#### 1. Generating data
+Our first approach to this problem was to generate a data set by recording the moves by which we shuffled the cube, and recording the initial state of the cube along with the series of moves by which we would solve the cube. The original data set can be found in //////cube_example.csv. However, this posed several problems for our model, the primary problem being the output of the data set. </br></br>
+
+CNN's work best when they have a definite set of outputs. In other words, CNN's are not good at generating original output. Thus, our model was going to have a hard time generating a solution to a shuffle permutation it had not seen before. Consider the following:
+
+```
+Math about how many permutations there are
+```
+Thus, it was decided that we needed a finite output space for our model. Naturally, we thought that the possible moves on the cube (see previous references) would serve as an appropriate output space. In the [sudoku solver](https://towardsdatascience.com/solving-sudoku-with-convolution-neural-network-keras-655ba4be3b11, Verma ran into a similar problem with his model, so he took the approach of attempting to solve the sudoku board one square at a time. This strategy was effective for him, so we decided to pursue a similar strategy in our model. </br> </br>
+
+So, we decided on generating a data set that included one move at a time. The goal was that if the model saw enough moves on the cube at different permutations, it would learn how each move manipulated the cube and which moves were effective at solving the cube at different permutations. The CNN lends well to detecting complex patterns within the input data, so this strategy seemed to be advantageous with our choice of methodology. </br> </br>
+
+Our final input data looked like this: </br>
+
+
+
+
 To run the model and create other models:
 1. Get your data
 - You can do this by either runnning rs_one.py or by downloading the 'one_by_one.csv' data set from the Google drive (link in README).
