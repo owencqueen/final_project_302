@@ -6,6 +6,7 @@ from solver_helpers import get_move
 from solver_helpers import counter_move
 from solver_helpers import names_of_moves
 from solver_helpers import random_move
+from solver_helpers import mv_num_to_char
 
 def main():
 
@@ -36,9 +37,11 @@ def main():
 		#if this move is the counter of the last move (model is repeating itself) or if model has repeated same move 4 times
 		if((mvs[last_move] == counter_move(mvs[out[0]]) and rand_check != 1 and last_move != -1) or (repeat_same_move == 4)):
 			#perform a random move on cube
-			random_move(cube)
-			print(out[0]),
-			print("called random move") 
+			ranm = random_move(cube)
+			ranm_out = mv_num_to_char(ranm) 
+			p_out = mv_num_to_char(int(out[0]))
+			print(p_out),
+			print("Called random move:", ranm_out) 
 		
 			#rand_check makes sure we don't call random check multiple times in a row
 			rand_check = 1
@@ -47,7 +50,8 @@ def main():
 			repeat_same_move = 0
 		else:
 			#perform model's predicted move
-			print(out[0])
+			p_out = mv_num_to_char(int(out[0]))
+			print(p_out)
 			mv = get_move(cube, out[0])
 			mv()
 
@@ -65,6 +69,7 @@ def main():
 		#while loop ends if we have done 50 moves
 		count+=1
 		if(count == 50) :
+			print("No solve (in less than 50 moves)")
 			break
 
 	
