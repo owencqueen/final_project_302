@@ -5,12 +5,13 @@ import solver_helpers
 
 class rubiks_cube:
 	
-	dim = 2 # Defines the dimension of the cube (i.e., faces as dim x dim dimensions)
+	dim = 2 # Defines the dimension of the cube 
+		# (i.e., faces as dim x dim dimensions)
 
-	def __init__(self):
+	def __init__(self): # Constructor
 		
 		# Initialize 2d matrices to be face colors
-		# Based off of convention of page on Groupme
+		# Based off of convention of page on documentation
 		self.f = [ ['r', 'r'], ['r', 'r'] ]
 		self.b = [ ['o', 'o'], ['o', 'o'] ]
 		self.u = [ ['w', 'w'], ['w', 'w'] ]
@@ -42,7 +43,10 @@ class rubiks_cube:
 		# Checks if the cube is solved (returns bool)
 		# Fn call syntax: if_solved()
 	shuffle     = cube.cube_shuffle
-		# Shuffles the cube (calls random moves for given number of rotations)
+		# Shuffles the cube 
+		# (calls random moves for given number of rotations)
 		# Fn call syntax: shuffle(rotations)
-	
-	reset = cube.cube_reset
+	reset       = cube.cube_reset
+		# Resets the cube to its original state
+		# Changes nothing but the data in the face arrays
+		# Fn call syntax: reset()
