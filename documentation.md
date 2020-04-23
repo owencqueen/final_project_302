@@ -124,8 +124,34 @@ Thus, it was decided that we needed a finite output space for our model. Natural
 So, we decided on generating a data set that included one move at a time. The goal was that if the model saw enough moves on the cube at different permutations, it would learn how each move manipulated the cube and which moves were effective at solving the cube at different permutations. The CNN lends well to detecting complex patterns within the input data, so this strategy seemed to be advantageous with our choice of methodology. </br> </br>
 
 Our final input data looked like this: </br>
+![one_by_one screenshot](https://github.com/owencqueen/302_final_project/blob/master/doc_supplements/one_by_one-screenshot.png)
+</br>
 
+The state of the cube is stored in the "state" column, and the move in response to this state is stored in the "move" column (see Standard Indexing System below). </br>
 
+This is the data which our model would train on.
+
+#### 2. Processing data
+The function for the processing of the data is in the //////process_data.py file. This file must read in our data from the csv to a pandas dataframe and then convert it into a numpy array (the format by which the Keras model expects the data). </br></br>
+
+One additional step we had to work through was converting the character data of the cube into numerical data for the ML model. This was done by using helper functions written in solver_helpers.py. </br></br>
+
+This file is necessary to the building of our model in //////model.py.
+
+#### 3. Building the model
+The model is built in the file model.py (within the same function by which it is trained and compiled).
+
+#### 4. Training the model
+
+#### 5. Testing the model
+
+##### model_tester.py
+
+##### model_tester_random.py
+This model was built to combat some downfalls of relying only on our machine to solve the cube. 
+
+#### Results
+Although we received relatively poor accuracies from the training of our model, we anticipated that our model would produce more accurate results in the long run (since our model relied not on the one-step performance of our model but rather how it performed succesive moves). After running our testers several times here are our conclusions.
 
 
 To run the model and create other models:
