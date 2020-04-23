@@ -1,5 +1,9 @@
+# Backend implementation of cube functions
 import random
 
+# Move functions
+# Named weirdly to avoid mixups in names of functions
+#   in template_class
 def cube_upp(self):
 	rotate(self, "u", "cw")
 def cube_upp_p(self):
@@ -55,6 +59,8 @@ def rotate(self, face, option):
 	
 	return self
 	
+# Helper function for the rotate
+# Rotates spaces on one face in desired direction
 def move_around(face, option):
 	if (option == "cw"):
 		temp = face[0][0]
@@ -73,25 +79,12 @@ def move_around(face, option):
 	
 # Changes all the values around a rotated face after rotation
 def check_cube(self, precedence, direction):
-	
-	# Numeric variable for each face
-	F = 1
-	B = 1
-	L = 1
-	R = 1
-	U = 1
-	D = 1
 
-	# Codes:
-	#	1 = Adjacent
-	#   0 = Don't change
+	# Need some math to determine which faces to turn
+	# Convention based off of Rubiks Cube conventions found in documentation	
 
-	#Need some math to determine which faces to turn
-
+	# Back face
 	if   (precedence == "b"):
-		F = 0
-		
-		# Our line of faces is: u l d r
 		
 		# To be rotated:
 		#  1. Top of u
@@ -114,11 +107,10 @@ def check_cube(self, precedence, direction):
 				self.u[0][i] = self.l[self.dim - i - 1][0]
 				self.l[self.dim - i - 1][0] = self.d[self.dim - 1][self.dim - i - 1]
 				self.d[self.dim - 1][self.dim - i - 1] = temp_val
-			
 				
 
+	# Front face
 	elif (precedence == "f"):
-		B = 0
 		# To be rotated:	
 		#  1. Bottom of u	
 		#  2. Left of r
@@ -140,9 +132,8 @@ def check_cube(self, precedence, direction):
 				self.l[self.dim - i - 1][self.dim - 1] = self.u[self.dim - 1][i]
 				self.u[self.dim - 1][i] = temp_val
 
-
+	# Left face
 	elif (precedence == "l"):
-		R = 0
 
 		if (direction == "regular"):
 			for i in range(0, self.dim):
@@ -161,8 +152,9 @@ def check_cube(self, precedence, direction):
 				self.b[i][self.dim - 1] = temp_val
 				
 
+	# Right face
 	elif (precedence == "r"):
-		L = 0
+
 		if (direction == "regular"):
 			for i in range(0, self.dim):
 				temp_val = self.u[i][self.dim - 1]
@@ -179,11 +171,8 @@ def check_cube(self, precedence, direction):
 				self.d[i][self.dim - 1] = self.f[i][self.dim - 1]
 				self.f[i][self.dim - 1] = temp_val
 				
-
+	# Upper face
 	elif (precedence == "u"):
-		D = 0
-		
-		# temp = self.f[0]
 
 		# We're moving the top ccw
 		if (direction == "regular"):	
@@ -203,10 +192,9 @@ def check_cube(self, precedence, direction):
 				self.r[0][i] = temp_val
 
 
+	# Down face
 	elif (precedence == "d"):
-		U = 0
 		ind = self.dim - 1
-		#temp = self.f[ind]
 		
 		if (direction == "regular"):	
 			for i in range(0, self.dim):
@@ -225,6 +213,7 @@ def check_cube(self, precedence, direction):
 				self.l[ind][i] = temp_val
 
 		return self
+
 
 # Shuffles the cube (calls random moves repeatedly)
 def cube_shuffle(self, rotations):

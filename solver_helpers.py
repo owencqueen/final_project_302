@@ -31,14 +31,30 @@ def random_move(cube):
 	elif (check == 12):
 		cube.right_prime()	
 
+	return (check - 1)
+
 # Returns an array of the move functions in the rubiks_cube object passed to arg
 def moves(cube):
 	mvs = [ cube.front, cube.front_prime, cube.back, cube.back_prime, cube.up, cube.up_prime, cube.down, cube.down_prime, cube.left, cube.left_prime, cube.right, cube.right_prime ]
 	return mvs
 
+
+# Returns an array of the names of moves
 def names_of_moves():
 	mvs = [ "F", "F`", "B", "B`", "U", "U`", "D", "D`", "L", "L`", "R", "R`" ]
 	return mvs
+
+
+# Given the number of a move, returns the character representation
+def mv_num_to_char(mv_num):
+	
+	mvs = names_of_moves()
+	
+	if (mv_num == 12):
+		return "None"
+
+	return mvs[mv_num]
+
 
 # Flattens all of the face data into one array
 # Must remain consistent for each flatten
@@ -63,6 +79,7 @@ def flatten_faces(rc):
 
 	return flat
 
+
 # Gives the counter move of a given move
 # char_name is character representation of a move
 def counter_move(char_name):
@@ -79,6 +96,8 @@ def counter_move(char_name):
 		return mvs[ ind + 1 ] 		
 
 
+# 'f' denotes a function return
+# Returns the function to counter a given character representation of a move
 def counter_move_f(r, char_name):
 
 	if (char_name == "F"):
@@ -209,4 +228,29 @@ def two_dim_data(ring):
 	return whole_mat
 
 
+# Converts the solution into the form that the ML model can read
+# If op == 1, this means that sol argument is only one character i.e. one move
+# If into_num = 1, returns the numerical value of the move 
+#    ( as based off of names_of_moves() convention in solver_helpers ) 
+def convert_sol(sol, op = 0, into_num = 0):
 
+        s = ''
+
+        if (into_num == 1):
+                mvs = sh.names_of_moves()
+                s = mvs.index(sol)
+
+
+        else:
+                if (op == 1):
+                        if (len(sol) > 1):
+                                s = sol[0].lower()
+                        else:
+                                s = sol
+                else:
+                        for i in range(0, len(sol)):
+                                if (len(sol[i]) > 1):
+                                        s += sol[i][0].lower()
+                                else:
+                                        s += sol[i]
+        return s
