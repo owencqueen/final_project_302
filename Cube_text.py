@@ -118,7 +118,9 @@ def in_handler(cube, cmmd):
 
 	elif cmmd.lower() == "check":
 		print(" Status of cube is: ")
-		cube.if_solved()
+		if cube.if_solved():
+			print("Solved.")
+		else: print("Not Solved.")
 		print()
 		return
 		
