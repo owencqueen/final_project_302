@@ -106,7 +106,6 @@ All move functions are implemented in [cube.py](https://github.com/owencqueen/fi
 ## Solvers
 ### Recursive Solver
 The [recursive_solver.py](https://github.com/owencqueen/final_project_302/blob/master/recursive_solver.py) file contains the implementation of a recursive solver to the Rubik's Cube. This solver works in a similar style as Dr. Plank's [sudoku solver](http://web.eecs.utk.edu/~jplank/plank/classes/cs140/Notes/Sudoku/index.html) works.</br>
-</br>
 After testing this solver, we quickly realized that this solution would not be practical. For many reasons such as general time complexity of the solver, we abandoned this brute-force technique. However, the file has been left in the repo for reference.
 ### CNN Solver
 When we began this project, we intended to explore using reinforcement learning (RL) to build a solver for the Rubik's Cube. However, after we started researching, we realized that developing a model using RL techniques would be far too time consuming and would require more advanced knowledge of machine learning than we possessed, or had time to learn. Thus, we decided that supervised learning may be the better approach due to the wider availability of Python libraries specifically for supervised rather than unsupervised learning. </br>
