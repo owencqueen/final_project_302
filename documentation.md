@@ -49,6 +49,7 @@ If you want to access the individual blocks in the cube, you can use the below m
 | b | Blue |
 ### Faces Represented as 2D Arrays
 These are the initial values of each face as intialized in the constructor in [template_class.py](https://github.com/owencqueen/final_project_302/blob/master/r_cube/template_class.py). </br>
+
 Here is the initial state and orientation of each face. This is based off of our standard convention for the setup of the cube found above under the "Documentation" heading. </br>
 #### Front face
 ```
@@ -155,9 +156,64 @@ One additional step we had to work through was converting the character data of 
 This file is necessary to the model built in model.py.
 
 #### 3. Building the model
-The model is built in the file [model.py](https://github.com/owencqueen/final_project_302/blob/master/cnn_solver/model.py) (within the same function by which it is trained and compiled).
+The model is built in the file [model.py](https://github.com/owencqueen/final_project_302/blob/master/cnn_solver/model.py) (within the same function by which it is trained and compiled). The structure of this model is based off a similar structure from the [sudoku solver](https://towardsdatascience.com/solving-sudoku-with-convolution-neural-network-keras-655ba4be3b11) that we used as a reference. </br>
+
+This model consists of the following structure:
+```
+(Layer): input -> [Convolution] -> [Convolution] -> [Convolution] -> [Dense] -> output
+(Size):	       	      [50]             [50]             [100]          [13]
+```
+##### Convolutional Layers
+The convolutional layers perform a mathematical operation called [convolution](https://en.wikipedia.org/wiki/Convolution) on the input data. These layers are what make these types of networks unique, and this process has been shown to be very effective at detecting both high-level and low-level patterns in the data.
+###### Size:
+The size of our convolutional layers was relatively arbitrary. We did not do much research into optimizing this section of the network, so we based our structure off of the aforementioned sudoku solver. The third convolutional layer had more nodes that the first two, and that is due to the kernel size which is discussed below.
+###### Kernel size:
+The kernel is a parameter in the convolution function. Basically, the kernel is a matrix that iterates over the data and performs convolution at each step. Kernel size is important for the detection of patterns within the data. </br>
+
+We chose our kernel size in the following structure:
+```
+(Layer order):  [1] -> [2] -> [3]
+(Kernel size): (2,2)  (2,2)  (1,1)
+```
+The first two layers consisted 2x2 kernels and the last one consisted of a 1x1 kernel. We made a choice on these sizes thinking that as the data progressed through the model, we should have smaller kernels to pick up smaller patterns.
+
+###### Activation function:
+We chose our activation function to be [RELU](https://en.wikipedia.org/wiki/Rectifier_(neural_networks)), which has been proven to be very effective on neural networks due to its linear form.
+
+###### Padding:
+Padding is explained in much more detail in the article below on CNN's. We chose to use it because this is what the sudoku solver used.
+
+##### BatchNormalization
+Some of the sources that we came across claimed that using the [BatchNormalization](https://machinelearningmastery.com/batch-normalization-for-training-of-deep-neural-networks/) function, which normalizes the data in between layers in the network, improves model performance and accuracy. Naturally, we decided to implement this in our model. 
+
+##### Flatten
+Most of the models that we referenced in building our model, including the sudoku solver, flattened the data before the Dense layer in their model; therefore, we implemented a similar strategy in our model.
+
+##### Dense layer
+The dense layer represents the output layer in our model. It contains 13 nodes because we have 13 possible outputs from our model (see Standard Indexing System below). 
+
+##### Activation
+We chose to use [softmax](https://medium.com/data-science-bootcamp/understand-the-softmax-function-in-minutes-f3a59641e86d) as our activation function in this model. This was used by many of the other models that we referenced, and we had found some references that claimed it was highly effective in neural networks (see link in this paragraph).
+
+##### Optimizer
+We chose to use the [adam optimizer](https://towardsdatascience.com/adam-latest-trends-in-deep-learning-optimization-6be9a291375c) in our model with a learning rate of 0.001. This has been shown to perform better, in some instances, than the popular stochastic gradient descent algorithm.
+
+##### Compiling the model
+We used the compile() function to compile our model. This was the second-to-last step of creating our model.
+###### Loss function
+We chose spare categorical crossentropy solely because the sudoku model used this same loss function.
+
+For more information on the anatomy and physiology of convolutional neural networks, see [this article](https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53) on towardsdatascience.com.
 
 #### 4. Training the model
+The model is trained by running the model_driver.py script, which calls the train_obo (function in model.py file). Upon running this script, the user is prompted:
+```
+Name of new model:     # Self-explanatory
+Data to be trained on: # csv file in local directory to train model on
+Batch size:            # 
+Num epochs:            # 
+```
+
 
 #### 5. Testing the model
 
