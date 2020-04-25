@@ -111,9 +111,9 @@ After testing this solver, we quickly realized that this solution would not be p
 ### CNN Solver
 When we began this project, we intended to explore using reinforcement learning (RL) to build a solver for the Rubik's Cube. However, after we started researching, we realized that developing a model using RL techniques would be far too time consuming and would require more advanced knowledge of machine learning than we possessed, or had time to learn. Thus, we decided that supervised learning may be the better approach due to the wider availability of Python libraries specifically for supervised rather than unsupervised learning. </br>
 
-After much research, we were able to develop a supervised learning model built on deep neural networks. This model is based on a convolutional neural network ([CNN](https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53)), a type of neural network typically used for image processing. The inspiration for this came from a similar implementation of a [CNN for a sudoku solver](https://towardsdatascience.com/solving-sudoku-with-convolution-neural-network-keras-655ba4be3b11). </br> </br>
+After much research, we were able to develop a supervised learning model built on deep neural networks. This model is based on a convolutional neural network ([CNN](https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53)), a type of neural network typically used for image processing. The inspiration for this came from a similar implementation of a [CNN for a sudoku solver](https://towardsdatascience.com/solving-sudoku-with-convolution-neural-network-keras-655ba4be3b11). </br>
 
-All of the files associated with building the CNN solver are in the [cnn_solver](https://github.com/owencqueen/final_project_302/tree/master/cnn_solver) directory. </br>
+All of the files associated with building the CNN solver are in the [cnn_solver](https://github.com/owencqueen/final_project_302/tree/master/cnn_solver) directory. Note: another copy of solver_helpers.py is included in this file because we had trouble with importing and packages in Python. </br>
 
 Here is the process by which we developed this model:
 
@@ -128,33 +128,50 @@ Math about how many permutations there are
 Thus, it was decided that we needed a finite output space for our model. Naturally, we thought that the possible moves on the cube (see previous references) would serve as an appropriate output space. In the [sudoku solver](https://towardsdatascience.com/solving-sudoku-with-convolution-neural-network-keras-655ba4be3b11), Verma ran into a similar problem with his model, so he took the approach of attempting to solve the sudoku board one square at a time. This strategy was effective for him, so we decided to pursue a similar strategy in our model. </br> </br>
 
 So, we decided on generating a data set that included one move at a time. The goal was that if the model saw enough moves on the cube at different permutations, it would learn how each move manipulated the cube and which moves were effective at solving the cube at different permutations. The CNN lends well to detecting complex patterns within the input data, so this strategy seemed to be advantageous with our choice of methodology. </br> </br>
+##### reverse_shuffle.py
+We generated this data in the program [reverse_shuffle.py](https://github.com/owencqueen/final_project_302/blob/master/reverse_shuffle.py) (in the  primary repository). Upon running the program, it prompts the user as so:
+```
+How many rotations per shuffle? # Self-explanatory
+How many shuffles?              # Full iterations to be considered in output file
+Name of output file?            # Self-explanatory
+```
+- The total number of rows in your output file will be (num. shuffles)x(rot. per shuffle). 
+- Your output file will be located in the [cnn_solver](https://github.com/owencqueen/final_project_302/tree/master/cnn_solver) directory.</br>
 
-Our final input data looked like this: </br>
+The output data from this program is stored in the following format: </br>
 ![one_by_one screenshot](https://github.com/owencqueen/302_final_project/blob/master/doc_supplements/one_by_one-screenshot.png)
 </br>
 
-The state of the cube is stored in the "state" column, and the move in response to this state is stored in the "move" column (see Standard Indexing System below). </br>
+- The state of the cube is stored in the "state" column, and the move in response to this state is stored in the "move" column (see Standard Indexing System below). </br>
 
 This is the data which our model would train on.
 
+
 #### 2. Processing data
-The function for the processing of the data is in the //////process_data.py file. This file must read in our data from the csv to a pandas dataframe and then convert it into a numpy array (the format by which the Keras model expects the data). </br></br>
+The function for the processing of the data is in the [process_data.py](https://github.com/owencqueen/final_project_302/blob/master/cnn_solver/process_data.py) file. This file must read in our data from the csv to a pandas dataframe and then convert it into a numpy array (the format by which the Keras model expects the data). </br></br>
 
 One additional step we had to work through was converting the character data of the cube into numerical data for the ML model. This was done by using helper functions written in solver_helpers.py. </br></br>
 
-This file is necessary to the building of our model in //////model.py.
+This file is necessary to the model built in model.py.
 
 #### 3. Building the model
-The model is built in the file model.py (within the same function by which it is trained and compiled).
+The model is built in the file [model.py](https://github.com/owencqueen/final_project_302/blob/master/cnn_solver/model.py) (within the same function by which it is trained and compiled).
 
 #### 4. Training the model
 
 #### 5. Testing the model
 
 ##### model_tester.py
+This tester simply shuffles a Rubik's Cube and then extracts predictions from the model based on the current state of the cube. Upon running this module, the user is prompted with the following:
+```
+Model to test:
+Number of rotations for shuffle:
+```
+Note: ignore the garbage that is printed after entering your response. This is a result of using the keras/tensorflow modules. </br>
+Simply input the name of the model to be tested (i.e. no need to deal with file structure), and then input the number of rotations for which you will shuffle the cube before attempting to solve. </br>
 
 ##### model_tester_random.py
-This model was built to combat some downfalls of relying only on our machine to solve the cube. 
+This tester was built to combat some downfalls of relying only on our machine to solve the cube. It operates differently from model_tester.py in that if the model predicts repeating, redundant moves, this solver makes a random move.
 
 #### Results
 Although we received relatively poor accuracies from the training of our model, we anticipated that our model would produce more accurate results in the long run (since our model relied not on the one-step performance of our model but rather how it performed succesive moves). After running our testers several times here are our conclusions.
@@ -167,44 +184,22 @@ To run the model and create other models:
 2. Run obo_model_driver.py
 - Set the batch size and epoch number
 - Specify the name of the file to be stored in "models" directory
-### Machine Learning Solver
-#### Data 
-##### Generation
-We generated this data in the file [reverse_shuffle.py](https://github.com/owencqueen/302_final_project/blob/master/reverse_shuffle.py). This file works by prompting the user as so:
-```
-How many rotations? 
-How many shuffles? 
-```
-Rotations denotes the maximum number of times the cube will be rotated when being shuffled. Shuffles denotes the number of shuffles that are performed for each number of rotations in a shuffle. For example, if 20 rotations and 10 shuffles are specified, the program will perform 10 iterations of k rotation(s) shuffles, for k = 1, 2, ..., 20. Thus, the total number of trials performed would be 200 (20 x 10). 
-##### Storage
-The data for this project was stored in .csv files (written using Python csv module). The csv files are of the following general format: 
-```
-state, moves
-rrwb....byy, F
-rryb....gyy, f
-```
-Which is outputted in csv format as: </br>
-![Example of data in csv file](https://github.com/owencqueen/302_final_project/blob/master/data_pic.png)
-</br>
-###### Notes on storage
-- The column named "state" is the starting state of the cube after shuffle. </br>
-- The column named "moves" is the code for the moves made by the solver to achieve a solution. </br>
-- If a move is capitalized, it is not a prime move. </br>
-- If a move is lowercase, it is a prime move.
+
 ##### Data Compression
 To compress the data to fit easily in the .csv file, there is:
 1. flatten_faces ([solver_helpers.py](https://github.com/owencqueen/302_final_project/blob/master/solver_helpers.py)): this function takes all the data in the faces within the Rubik's Cube and outputs them into a single string.
 2.  
  
 ## Backend Cube/ Solvers Implementation
-All backend implementation of the Rubik's Cube workings is in cube.py. </br>
+### cube.py
+All backend implementation of the rubiks_cube class (in [template_class](https://github.com/owencqueen/final_project_302/blob/master/r_cube/template_class.py)) workings is in cube.py. </br>
 All of the rotation functions came down to two main functions: rotate and check_cube. Each move function calls rotate which then calls check_cube.
-### Rotate
+#### Rotate
 Rotate simply moves all of the colors on one face in either a clockwise or counterclockwise direction. Given a face, this function performs the rotation of each color on that face in the specified direction
-### Check_cube
+#### Check_cube
 This function is called after the rotation of colors on one face. After the main rotation, this function decides which faces are adjacent to the previously rotated face, and then it rotates the colors on those adjacent faces in the same manner as the previous face was rotated.
 
-### Solver_helpers
+### solver_helpers.py
 This file contains many of the functions that were used to help in writing the solvers, including the CNN model.
 
 #### Standard indexing system:
