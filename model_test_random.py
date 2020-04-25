@@ -1,12 +1,12 @@
 import keras
-from template_class import rubiks_cube
-from solver_helpers import flatten_faces
-from solver_helpers import two_dim_data
-from solver_helpers import get_move
-from solver_helpers import counter_move
-from solver_helpers import names_of_moves
-from solver_helpers import random_move
-from solver_helpers import mv_num_to_char
+from r_cube.template_class import rubiks_cube
+from r_cube.solver_helpers import flatten_faces
+from r_cube.solver_helpers import two_dim_data
+from r_cube.solver_helpers import get_move
+from r_cube.solver_helpers import counter_move
+from r_cube.solver_helpers import names_of_moves
+from r_cube.solver_helpers import random_move
+from r_cube.solver_helpers import mv_num_to_char
 
 def main():
 
@@ -19,7 +19,7 @@ def main():
 	cube.shuffle(int(shuf_num))
 
 
-	model = keras.models.load_model("models/" + mod_name)
+	model = keras.models.load_model("cnn_solver/models/" + mod_name)
 
 	last_move = -1  #keeps track of last move done
 	rand_check = 0  #makes sure we don't keep calling random continuously

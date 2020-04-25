@@ -1,13 +1,13 @@
 import keras
 import numpy as np
-import solver_helpers as sh
+import r_cube.solver_helpers as sh
 
-from template_class import rubiks_cube
+from r_cube.template_class import rubiks_cube
 
 
 def test_obo(mod_name, num_shuf):
 
-	model = keras.models.load_model("models/" + mod_name)
+	model = keras.models.load_model("cnn_solver/models/" + mod_name)
 	rc = rubiks_cube()
 
 	rc.shuffle(num_shuf)
@@ -19,8 +19,8 @@ def test_obo(mod_name, num_shuf):
 		rc_np   = sh.two_dim_data(rc_flat)            # np array
 		rc_np   = np.array(rc_np).reshape((1,2,12,1)) # np reshape
 		out     = model.predict_classes(rc_np) 
-		out	= sh.mv_num_to_char(int(out[0]))
-		print(out) # Print out prediction
+		out_p	= sh.mv_num_to_char(int(out[0]))
+		print(out_p) # Print out prediction
 
 		mv      = sh.get_move( rc, out[0] ) # Get the callable fn move
 		mv()                                # Make the move
