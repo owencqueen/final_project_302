@@ -22,6 +22,7 @@ def main():
 	model = keras.models.load_model("models/" + mod_name)
 
 	last_move = -1  #keeps track of last move done
+	rand_check = 0  #makes sure we don't keep calling random continuously
 	repeat_same_move = 0  #keeps track of repeating the same move
 	count = 0 #keeps track of all moves done
 	
