@@ -2,7 +2,7 @@
 # Text-based User Interfacing
 
 import sys
-from template_class import rubiks_cube
+from r_cube.template_class import rubiks_cube
 
 
 # Commonly Used Strings
