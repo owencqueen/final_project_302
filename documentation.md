@@ -2,10 +2,13 @@
 This is the documentation for this repo. We based our intial structure and notation off of the [standard convention for the Rubik's Cube](http://www.rubiksplace.com/move-notations/).
 
 ## Rubik's Cube Representation
-The class definition for the Rubik's Cube can be found in the template_class.py file. Member functions can be found in the cube.py file. 
+All of the modules involved in the representation of the cube are in the [r_cube](https://github.com/owencqueen/final_project_302/tree/master/r_cube) directory.
+- The class definition for the Rubik's Cube can be found in the [template_class.py](https://github.com/owencqueen/final_project_302/blob/master/r_cube/template_class.py) file. 
+- Member functions can be found in the [cube.py](https://github.com/owencqueen/final_project_302/blob/master/r_cube/cube.py) file. 
+- Functions to help with our solvers, as well as other programs, are contained in the [solver_helpers.py](https://github.com/owencqueen/final_project_302/blob/master/r_cube/solver_helpers.py) file. 
 ### Cube Dimension
 ![2x2x2 Rubik's Cube](https://www.grubiks.com/images/puzzles/17/small.png) </br>
-Stored in the "dim" variable is the dimensions of the cube. Currently the only supported dimension is 2x2x2, but we have considered extendind our model to 3x3x3 (the standard size).
+Stored in the "dim" variable is the dimensions of the cube. Currently the only supported dimension is 2x2x2, but, if we had more time, we considered extending our model to 3x3x3.
 ### Orientation
 Orientation in space based off of conventional 2D representation of the cube [found here](https://www.codewars.com/kata/5b3bec086be5d8893000002e):
 ```
@@ -45,7 +48,7 @@ If you want to access the individual blocks in the cube, you can use the below m
 | g | Green |
 | b | Blue |
 ### Faces Represented as 2D Arrays
-These are the initial values of each face as intialized in the constructor in [template_class.py](https://github.com/owencqueen/302_final_project/blob/master/template_class.py). </br>
+These are the initial values of each face as intialized in the constructor in [template_class.py](https://github.com/owencqueen/final_project_302/blob/master/r_cube/template_class.py). </br>
 Here is the initial state and orientation of each face. This is based off of our standard convention for the setup of the cube found above under the "Documentation" heading. </br>
 #### Front face
 ```
@@ -78,7 +81,7 @@ r = [ ['b', 'b'],
     ['b', 'b'] ]
 ```
 ## Move Functions
-All move functions are implemented in [cube.py](https://github.com/owencqueen/302_final_project/blob/master/cube.py) (see under "Backend Cube Implementation" below). </br>
+All move functions are implemented in [cube.py](https://github.com/owencqueen/final_project_302/blob/master/r_cube/cube.py) (see under "Backend Cube Implementation" below). </br>
   | Class Syntax | Standard Notation |
   |---------------| ------------------|
   | front()       | F                 |
@@ -102,18 +105,20 @@ All move functions are implemented in [cube.py](https://github.com/owencqueen/30
  - All functions are formatted in the the standard Rubik's Cube notation, which can be found in the link under the "Documentation" header. </br>
 ## Solvers
 ### Recursive Solver
-The [recursive_solver.py]() file contains the implementation of a recursive solver to the Rubik's Cube. This solver works in a similar style as Dr. Plank's [sudoku solver](http://web.eecs.utk.edu/~jplank/plank/classes/cs140/Notes/Sudoku/index.html) works.</br>
+The [recursive_solver.py](https://github.com/owencqueen/final_project_302/blob/master/recursive_solver.py) file contains the implementation of a recursive solver to the Rubik's Cube. This solver works in a similar style as Dr. Plank's [sudoku solver](http://web.eecs.utk.edu/~jplank/plank/classes/cs140/Notes/Sudoku/index.html) works.</br>
 </br>
 After testing this solver, we quickly realized that this solution would not be practical. For many reasons such as general time complexity of the solver, we abandoned this brute-force technique. However, the file has been left in the repo for reference.
 ### CNN Solver
-When we began this project, we intended to explore using reinforcement learning (RL) to build a solver for the Rubik's Cube. However, after we started researching, we realized that developing a model using RL techniques would be far too time consuming and would require more advanced knowledge of machine learning than we possessed, or had time to learn. Thus, we decided that supervised learning may be the better approach due to the wider availability of Python libraries specifically for supervised rather than unsupervised learning. </br> </br>
+When we began this project, we intended to explore using reinforcement learning (RL) to build a solver for the Rubik's Cube. However, after we started researching, we realized that developing a model using RL techniques would be far too time consuming and would require more advanced knowledge of machine learning than we possessed, or had time to learn. Thus, we decided that supervised learning may be the better approach due to the wider availability of Python libraries specifically for supervised rather than unsupervised learning. </br>
 
 After much research, we were able to develop a supervised learning model built on deep neural networks. This model is based on a convolutional neural network ([CNN](https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53)), a type of neural network typically used for image processing. The inspiration for this came from a similar implementation of a [CNN for a sudoku solver](https://towardsdatascience.com/solving-sudoku-with-convolution-neural-network-keras-655ba4be3b11). </br> </br>
+
+All of the files associated with building the CNN solver are in the [cnn_solver](https://github.com/owencqueen/final_project_302/tree/master/cnn_solver) directory. </br>
 
 Here is the process by which we developed this model:
 
 #### 1. Generating data
-Our first approach to this problem was to generate a data set by recording the moves by which we shuffled the cube, and recording the initial state of the cube along with the series of moves by which we would solve the cube. The original data set can be found in //////cube_example.csv. However, this posed several problems for our model, the primary problem being the output of the data set. </br></br>
+Our first approach to this problem was to generate a data set by recording the moves by which we shuffled the cube, and recording the initial state of the cube along with the series of moves by which we would solve the cube. The original data set can be found in [old_data.csv](https://github.com/owencqueen/final_project_302/blob/master/example_data/old_data.csv). However, this posed several problems for our model, the primary problem being the output of the data set. </br>
 
 CNN's work best when they have a definite set of outputs. In other words, CNN's are not good at generating original output. Thus, our model was going to have a hard time generating a solution to a shuffle permutation it had not seen before. Consider the following:
 
