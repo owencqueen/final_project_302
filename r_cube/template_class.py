@@ -1,7 +1,7 @@
 # Definition of the rubiks_cube class
 
-import cube
-import solver_helpers
+from . import cube
+from . import solver_helpers
 
 class rubiks_cube:
 	
