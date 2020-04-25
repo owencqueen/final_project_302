@@ -1,9 +1,9 @@
 # Recursive solver for the cube
-import template_class
-from solver_helpers import moves
-from solver_helpers import names_of_moves
-from solver_helpers import counter_move
-from solver_helpers import counter_move_f
+from r_cube import template_class
+from r_cube.solver_helpers import moves
+from r_cube.solver_helpers import names_of_moves
+from r_cube.solver_helpers import counter_move
+from r_cube.solver_helpers import counter_move_f
 
 mvs_ind = [] # Array for indices of the moves made
 names = names_of_moves()

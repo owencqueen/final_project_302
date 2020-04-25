@@ -2,9 +2,9 @@
 
 import random
 import csv
-import solver_helpers as sh
+import r_cube.solver_helpers as sh
 
-from template_class import rubiks_cube
+from r_cube.template_class import rubiks_cube
 
 # Performs reverse shuffle algorithm/ optimizes the reverse moves
 # Returns flat string, solution, and current state of rubiks cube
