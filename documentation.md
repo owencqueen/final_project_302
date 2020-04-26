@@ -468,12 +468,26 @@ two_dim_data(ring)
 	- Array of dimension 2x12
 
 ## User Interaction
-### Way to get comfortable with a cube
+### Antoher way to get comfortable with a cube
+This interface was useful for testing our object.
+    It is based on python version python3
 ```
-usage: Cube_text.py cube_dimensions
+usage: python3 Cube_text.py cube_dimensions
 ```
-- Type the dimensions as the argument
-	- 
+- What can you do with the interface?
+	- typing help will show you all the commands.
+	
+	- Reset
+	- Shuffle
+	- Rotate
+	- Print
+	- Check
+
+- Rotation commands:
+	- Commands can be typed in any format, so long as it follows this convention:
+	- "R" or "r" or "R'" or "r'" or "R'2" or "r'2"
+		- The commands do not need to have spaces between them.
+		- As long as the commands are correct, the rotations will be read in order.
 
 
 ## Libraries:
