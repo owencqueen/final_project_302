@@ -468,6 +468,13 @@ two_dim_data(ring)
 	- Array of dimension 2x12
 
 ## User Interaction
+### Way to get comfortable with a cube
+```
+usage: Cube_text.py cube_dimensions
+```
+- Type the dimensions as the argument
+	- 
+
 
 ## Libraries:
 You can install all of these libraries using [pip](https://pip.pypa.io/en/stable/). For example:
