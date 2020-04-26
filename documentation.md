@@ -15,6 +15,7 @@ This is the documentation for this repo. We based our intial structure and notat
 - [solver_helpers.py](https://github.com/owencqueen/final_project_302/blob/master/r_cube/solver_helpers.py)
 	- Standard Indexing System 
 5. User Interaction
+6. Libraries used
 
 ## Rubik's Cube Representation
 All of the modules involved in the representation of the cube are in the [r_cube](https://github.com/owencqueen/final_project_302/tree/master/r_cube) directory.
@@ -471,3 +472,20 @@ two_dim_data(ring)
 
 ## User Interaction
 
+## Libraries:
+You can install all of these libraries using pip. For example:
+```
+UNIX> pip install keras
+```
+Installs the keras library. You can repeat this for all other libraries.
+
+1. csv 
+2. keras (v. 2.3.1)
+3. math  
+4. numpy (v. 1.18.2)
+5. pandas (v. 1.0.3)
+6. pygame
+7. random
+8. scikit-learn (v. 0.22.2.post1)
+9. sys
+10. tensorflow (v. 2.2.0rc3)
