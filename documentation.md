@@ -468,19 +468,21 @@ two_dim_data(ring)
 	- Array of dimension 2x12
 
 ## User Interaction
-### Antoher way to get comfortable with a cube
+### Cube-text.py
 This interface was useful for testing our object.
-    It is based on python version python3
+    It is based on python version 3
 ```
 usage: python3 Cube_text.py cube_dimensions
 ```
 - What can you do with the interface?  
-  (typing "help" will show you all the commands)
+  (typing "help" will show you all the commands)  
+
 	- Reset
 	- Shuffle
 	- Print
 	- Check
-	- Rotate
+	- Rotate  
+
 - Rotation commands:
 	- Commands can be typed in any format, so long as it follows this convention:
 	- F or f or F' or f' or F2 or f2 or F'2 or f'2 
@@ -488,12 +490,13 @@ usage: python3 Cube_text.py cube_dimensions
 		- " ' " (or prime) means opposite direction
 		- number is the amount of turns (must be single digit 1-9)
 		- commands need no spaces between them
-		- if the commands are correct, the rotations will be read in order.
-- Print command:
-	- prints the faces in the cross pattern mentioned at the top
-- Shuffle command:
-	- asks how many rotations should be made
+		- if the commands are correct, the rotations will be read in order.  
 
+- Print command:
+	- prints the faces in the cross pattern mentioned at the top  
+
+- Shuffle command:
+	- asks how many rotations should be made  
 
 ## Libraries:
 You can install all of these libraries using [pip](https://pip.pypa.io/en/stable/). For example:
