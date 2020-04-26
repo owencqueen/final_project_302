@@ -1,11 +1,12 @@
 # Exploring the 2x2 Rubik's Cube
-Final project for CS302
+Final project for CS302 at UTK.
 
 Access our Google Drive folder with log information [here].
 
 [here]: https://drive.google.com/drive/folders/1hIw_WaZPfqpyH6AnfTdHOG10UUI7ogju?usp=sharing
 
 ## Libraries:
+Before running our code, you'll want to install the following libraries:
 
 1. csv 
 2. keras (v. 2.3.1)
