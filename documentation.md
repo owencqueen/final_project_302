@@ -1,6 +1,21 @@
 # Documentation
 This is the documentation for this repo. We based our intial structure and notation off of the [standard convention for the Rubik's Cube](http://www.rubiksplace.com/move-notations/).
 
+### Contents
+1. Rubik's Cube Representation
+- Cube Dimension
+- Orientation
+- Color Codes
+2. Move Functions
+3. Solvers
+- Recursive Solver: [recursive_solver.py](https://github.com/owencqueen/final_project_302/blob/master/recursive_solver.py)
+- CNN Solver: [cnn_solver](https://github.com/owencqueen/final_project_302/tree/master/cnn_solver)
+4. Backend Cube/ Solvers Implementation
+- [cube.py](https://github.com/owencqueen/final_project_302/blob/master/r_cube/cube.py)
+- [solver_helpers.py](https://github.com/owencqueen/final_project_302/blob/master/r_cube/solver_helpers.py)
+	- Standard Indexing System 
+5. User Interaction
+
 ## Rubik's Cube Representation
 All of the modules involved in the representation of the cube are in the [r_cube](https://github.com/owencqueen/final_project_302/tree/master/r_cube) directory.
 - The class definition for the Rubik's Cube can be found in the [template_class.py](https://github.com/owencqueen/final_project_302/blob/master/r_cube/template_class.py) file. 
@@ -54,32 +69,32 @@ Here is the initial state and orientation of each face. This is based off of our
 #### Front face
 ```
 f = [ ['r', 'r'],
-    ['r', 'r'] ]
+      ['r', 'r'] ]
 ```
 #### Back face
 ```
 b = [ ['o', 'o'],
-    ['o', 'o'] ]
+      ['o', 'o'] ]
 ```
 #### Up face
 ```
 u = [ ['w', 'w'],
-    ['w', 'w'] ]
+      ['w', 'w'] ]
 ```
 #### Down face
 ```
 d = [ ['y', 'y'],
-    ['y', 'y'] ]
+      ['y', 'y'] ]
 ```
 #### Left face
 ```
 l = [ ['g', 'g'],
-    ['g', 'g'] ]
+      ['g', 'g'] ]
 ```
 #### Right face
 ```
 r = [ ['b', 'b'],
-    ['b', 'b'] ]
+      ['b', 'b'] ]
 ```
 ## Move Functions
 All move functions are implemented in [cube.py](https://github.com/owencqueen/final_project_302/blob/master/r_cube/cube.py) (see under "Backend Cube Implementation" below). </br>
@@ -147,6 +162,24 @@ The output data from this program is stored in the following format: </br>
 
 This is the data which our model would train on.
 
+##### Our data
+We worked off of two primary datasets in this project: one_by_one.csv and cube_data.csv (both of which can be found in this public [Google Drive folder](https://drive.google.com/drive/folders/18-pDI7ZcoNsYXTu68iljprL7TQ4-Rgpj?usp=sharing)). We stored the data in a Google Drive folder because the data far exceeded the Github maximum file size. </br>
+
+The first file was one_by_one.csv, which was built with the following parameters:
+```
+UNIX> python3 reverse_shuffle.py
+How many rotations per shuffle? 20
+How many shuffles? 100000
+Name of output file? one_by_one.csv
+```
+
+The second file was cube_data.csv, which was built with the following parameters:
+```
+UNIX> python3 reverse_shuffle.py
+How many rotations per shuffle? 20
+How many shuffles? 400000
+Name of output file? cube_data.csv
+```
 
 #### 2. Processing data
 The function for the processing of the data is in the [process_data.py](https://github.com/owencqueen/final_project_302/blob/master/cnn_solver/process_data.py) file. This file must read in our data from the csv to a pandas dataframe and then convert it into a numpy array (the format by which the Keras model expects the data). </br></br>
@@ -196,7 +229,7 @@ The dense layer represents the output layer in our model. It contains 13 nodes b
 We chose to use [softmax](https://medium.com/data-science-bootcamp/understand-the-softmax-function-in-minutes-f3a59641e86d) as our activation function in this model. This was used by many of the other models that we referenced, and we had found some references that claimed it was highly effective in neural networks (see link in this paragraph).
 
 ##### Optimizer
-We chose to use the [adam optimizer](https://towardsdatascience.com/adam-latest-trends-in-deep-learning-optimization-6be9a291375c) in our model with a learning rate of 0.001. This has been shown to perform better, in some instances, than the popular stochastic gradient descent algorithm.
+We chose to use the [adam optimizer](https://towardsdatascience.com/adam-latest-trends-in-deep-learning-optimization-6be9a291375c) in our model with a learning rate of 0.001. This has been shown to perform better, in some instances, than the popular stochastic gradient descent algorithm. We chose a relatively low learning rate because we discovered that as we increased the learning rate, our model's accuracy was lowered.
 
 ##### Compiling the model
 We used the compile() function to compile our model. This was the second-to-last step of creating our model.
@@ -210,14 +243,33 @@ The model is trained by running the model_driver.py script, which calls the trai
 ```
 Name of new model:     # Self-explanatory
 Data to be trained on: # csv file in local directory to train model on
-Batch size:            # 
-Num epochs:            # 
+Batch size:            # batch_size
+Num epochs:            # epochs  
 ```
+The batch_size and epochs are arguments in the fit() function in model.py. Batch size denotes the number of samples in the data that are to be processed before the internal model parameters are updated. The number of epochs simply denotes the number of times the training process will iterate through the dataset. See [this article](https://machinelearningmastery.com/difference-between-a-batch-and-an-epoch/) for more information about batch_size and epochs. </br>
 
+We have included two of our trained models in this repository, located in the [cnn_solver/models](https://github.com/owencqueen/final_project_302/tree/master/cnn_solver/models) folder.
+##### [oboorg1.model](https://github.com/owencqueen/final_project_302/blob/master/cnn_solver/models/oboorg1.model)
+This was the first model that was built, and it was trained on the one_by_one.csv dataset (see above under "Our data"). These were the parameters for the model along with the accuracy results: </br>
+![Training oboorg1.model](https://github.com/owencqueen/final_project_302/blob/master/doc_supplements/one_by_one-model-terminal-output.png)
+Please note that the name of the file which this program was run on is now "model_driver.py" instead of "obo_model_driver.py". </br>
+
+The final accuracy of this model was 37.51%.
+##### [obonew1.model](https://github.com/owencqueen/final_project_302/blob/master/cnn_solver/models/obonew1.model)
+This model was trained on the cube_data.csv dataset (see above under "Our data"). This model was built after oboorg1.model. These were the parameters for the model along with the accuracy results: </br>
+![Training obonew1.model](https://github.com/owencqueen/final_project_302/blob/master/doc_supplements/cube_data-model-terminal-output.png)
+Please note, as is above, that the name of the file which this program was run on is now "model_driver.py" instead of "obo_model_driver.py". </br>
+
+The final accuracy of this model was 38.54%, as was to be expected for running this model on a larger dataset as compared to oboorg1.model.
+
+##### Conclusions after training the model
+Neither of our models achieved high accuracy in the initial training stages which would normally be very disappointing. However, because our model is only making individual guesses of moves, we should expect that when it comes to solving the Rubik's Cube, the model should perform better. In other words, our model may make bad individual guesses, but over the series of moves, these guesses may actually be effective. </br>
+
+We chose to use only three epochs because the improvement on the accuracy of the model seemed to diminish after 2-3 epochs.
 
 #### 5. Testing the model
 
-##### model_tester.py
+##### [model_tester.py](https://github.com/owencqueen/final_project_302/blob/master/model_test.py)
 This tester simply shuffles a Rubik's Cube and then extracts predictions from the model based on the current state of the cube. Upon running this module, the user is prompted with the following:
 ```
 Model to test:
@@ -226,8 +278,8 @@ Number of rotations for shuffle:
 Note: ignore the garbage that is printed after entering your response. This is a result of using the keras/tensorflow modules. </br>
 Simply input the name of the model to be tested (i.e. no need to deal with file structure), and then input the number of rotations for which you will shuffle the cube before attempting to solve. </br>
 
-##### model_tester_random.py
-This tester was built to combat some downfalls of relying only on our machine to solve the cube. It operates differently from model_tester.py in that if the model predicts repeating, redundant moves, this solver makes a random move.
+##### [model_tester_random.py](https://github.com/owencqueen/final_project_302/blob/master/model_test_random.py)
+This tester was built to combat some downfalls of relying only on our machine to solve the cube. It operates differently from model_tester.py in that if the model predicts repeating, redundant moves, this solver makes a random move. As far as running this tester, it takes the exact same parameters as model_tester.py.
 
 #### Results
 Although we received relatively poor accuracies from the training of our model, we anticipated that our model would produce more accurate results in the long run (since our model relied not on the one-step performance of our model but rather how it performed succesive moves). After running our testers several times here are our conclusions.
