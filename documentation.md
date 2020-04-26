@@ -475,19 +475,20 @@ This interface was useful for testing our object.
 usage: python3 Cube_text.py cube_dimensions
 ```
 - What can you do with the interface?
-	- typing help will show you all the commands.
-	
+  (typing "help" will show you all the commands)
+
 	- Reset
 	- Shuffle
-	- Rotate
 	- Print
 	- Check
-
+	- Rotate
 - Rotation commands:
 	- Commands can be typed in any format, so long as it follows this convention:
-	- "R" or "r" or "R'" or "r'" or "R'2" or "r'2"
-		- The commands do not need to have spaces between them.
-		- As long as the commands are correct, the rotations will be read in order.
+	- R or r or R' or r' or R2 or r2 or R'2 or r'2 
+		- " ' " (or prime) means opposite direction
+		- number is the amount of turns (must be single digit 1-9)
+		- commands need no spaces between them
+		- if the commands are correct, the rotations will be read in order.
 
 
 ## Libraries:
