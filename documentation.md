@@ -474,9 +474,8 @@ This interface was useful for testing our object.
 ```
 usage: python3 Cube_text.py cube_dimensions
 ```
-- What can you do with the interface?
+- What can you do with the interface?  
   (typing "help" will show you all the commands)
-
 	- Reset
 	- Shuffle
 	- Print
@@ -484,11 +483,16 @@ usage: python3 Cube_text.py cube_dimensions
 	- Rotate
 - Rotation commands:
 	- Commands can be typed in any format, so long as it follows this convention:
-	- R or r or R' or r' or R2 or r2 or R'2 or r'2 
+	- F or f or F' or f' or F2 or f2 or F'2 or f'2 
+		- letter is the face to rotate
 		- " ' " (or prime) means opposite direction
 		- number is the amount of turns (must be single digit 1-9)
 		- commands need no spaces between them
 		- if the commands are correct, the rotations will be read in order.
+- Print command:
+	- prints the faces in the cross pattern mentioned at the top
+- Shuffle command:
+	- asks how many rotations should be made
 
 
 ## Libraries:
