@@ -469,8 +469,8 @@ two_dim_data(ring)
 
 ## User Interaction
 ### Cube-text.py
-This interface was useful for testing our object.
-    It is based on python version 3
+A text-based cube based on our project implementation  
+       (utilizes python version 3)
 ```
 usage: python3 Cube_text.py cube_dimensions
 ```
