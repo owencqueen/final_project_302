@@ -135,13 +135,10 @@ All of the files associated with building the CNN solver are in the [cnn_solver]
 Here is the process by which we developed this model:
 
 #### 1. Generating data
-Our first approach to this problem was to generate a data set by recording the moves by which we shuffled the cube, and recording the initial state of the cube along with the series of moves by which we would solve the cube. The original data set can be found in [old_data.csv](https://github.com/owencqueen/final_project_302/blob/master/example_data/old_data.csv). However, this posed several problems for our model, the primary problem being the output of the data set. </br>
+Our first approach to this problem was to generate a data set by recording the moves by which we shuffled the cube, and recording the initial state of the cube along with the series of moves by which we would solve the cube. An example of the original data set can be found in [old_data.csv](https://github.com/owencqueen/final_project_302/blob/master/example_data/old_data.csv). However, this posed several problems for our model, the primary problem being the output of the data set. </br>
 
-CNN's work best when they have a definite set of outputs. In other words, CNN's are not good at generating original output. Thus, our model was going to have a hard time generating a solution to a shuffle permutation it had not seen before. Consider the following:
+CNN's work best when they have a definite set of outputs. In other words, CNN's are not good at generating original output. Thus, our model was going to have a hard time generating a solution to a shuffle permutation it had not seen before. In addition, the idea of training the model to treat the output as labels (for example, UDF would be a series of moves that is a label) would mean that the model would have to have seen every possible series of moves of outputs that it could make. However, this defeats the purpose of training a machine learning model because then we could simply lookup the cube permutation, which would give us a fast solution. </br>
 
-```
-Math about how many permutations there are
-```
 Thus, it was decided that we needed a finite output space for our model. Naturally, we thought that the possible moves on the cube (see previous references) would serve as an appropriate output space. In the [sudoku solver](https://towardsdatascience.com/solving-sudoku-with-convolution-neural-network-keras-655ba4be3b11), Verma ran into a similar problem with his model, so he took the approach of attempting to solve the sudoku board one square at a time. This strategy was effective for him, so we decided to pursue a similar strategy in our model. </br> </br>
 
 So, we decided on generating a data set that included one move at a time. The goal was that if the model saw enough moves on the cube at different permutations, it would learn how each move manipulated the cube and which moves were effective at solving the cube at different permutations. The CNN lends well to detecting complex patterns within the input data, so this strategy seemed to be advantageous with our choice of methodology. </br> </br>
@@ -473,7 +470,7 @@ two_dim_data(ring)
 ## User Interaction
 
 ## Libraries:
-You can install all of these libraries using pip. For example:
+You can install all of these libraries using [pip](https://pip.pypa.io/en/stable/). For example:
 ```
 UNIX> pip install keras
 ```
