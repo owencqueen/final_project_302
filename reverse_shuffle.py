@@ -2,7 +2,7 @@
 
 import random
 import csv
-import r_cube.solver_helpers as sh
+from r_cube import solver_helpers as sh
 
 from r_cube.template_class import rubiks_cube
 
@@ -166,41 +166,12 @@ def first_layer_moves(check, rc):
 
 	return [ sh.flatten_faces(rc), convert_sol(n, 1), rc ]
 
-
-# Main function that writes shuffles to csv file
-def main(rot, snum):
-	
-	sol = []
-	r = rubiks_cube()
-
-	with open('cube_example.csv', 'w', newline= '') as file:
-		
-		writer = csv.writer(file)		
-		writer.writerow( [ "state", "moves" ] )
-
-		for j in range(1, rot):
-			# Makes sure that we make every move when the shuffle number is one
-			if (j == 1):
-				for i in range(0, 12):
-					state, sol, r = first_layer_moves(i, r)
-					into = [ state, sol ]
-					writer.writerow( into )
-					r.reset() 
-	
-			else: # When shuffle number is not one
-				for i in range(0, snum):
-					state, sol, r = reverse_shuffle(j)
-					sol = convert_sol(sol)
-					into = [ state, sol ]
-					writer.writerow( into )
-					r.reset()
-
-def main2(f_name, rot, snum):
+def main(f_name, rot, snum):
 	
 	sol = []
 	r   = rubiks_cube()
 
-	with open(f_name, 'w', newline = '') as file:
+	with open("cnn_solver/" + f_name, 'w', newline = '') as file:
 		
 		writer = csv.writer(file)
 		writer.writerow( ['state', 'move'] )
@@ -229,6 +200,6 @@ rot  = int(rot)
 snum = input("How many shuffles? ")
 snum = int(snum)
 fn   = input("Name of output file? ")
-main2(fn, rot, snum)
+main(fn, rot, snum)
 
 

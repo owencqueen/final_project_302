@@ -237,7 +237,7 @@ def convert_sol(sol, op = 0, into_num = 0):
         s = ''
 
         if (into_num == 1):
-                mvs = sh.names_of_moves()
+                mvs = names_of_moves()
                 s = mvs.index(sol)
 
 
