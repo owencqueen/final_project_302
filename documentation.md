@@ -7,14 +7,14 @@ This is the documentation for this repo. We based our intial structure and notat
 - Orientation
 - Color Codes
 2. Move Functions
-3. Solvers
-- Recursive Solver: [recursive_solver.py](https://github.com/owencqueen/final_project_302/blob/master/recursive_solver.py)
-- CNN Solver: [cnn_solver](https://github.com/owencqueen/final_project_302/tree/master/cnn_solver)
-4. Backend Cube/ Solvers Implementation
+3. Backend Cube/ Solvers Implementation
 - [cube.py](https://github.com/owencqueen/final_project_302/blob/master/r_cube/cube.py)
 - [solver_helpers.py](https://github.com/owencqueen/final_project_302/blob/master/r_cube/solver_helpers.py)
 	- Standard Indexing System 
-5. User Interaction
+4. User Interaction
+5. Solvers
+- Recursive Solver: [recursive_solver.py](https://github.com/owencqueen/final_project_302/blob/master/recursive_solver.py)
+- CNN Solver: [cnn_solver](https://github.com/owencqueen/final_project_302/tree/master/cnn_solver)
 6. Libraries used
 
 ## Rubik's Cube Representation
@@ -120,182 +120,7 @@ All move functions are implemented in [cube.py](https://github.com/owencqueen/fi
     rc.front()         # Calling the function to perform F move
     ```
  - All functions are formatted in the the standard Rubik's Cube notation, which can be found in the link under the "Documentation" header. </br>
-## Solvers
-### Recursive Solver
-The [recursive_solver.py](https://github.com/owencqueen/final_project_302/blob/master/recursive_solver.py) file contains the implementation of a recursive solver to the Rubik's Cube. This solver works in a similar style as Dr. Plank's [sudoku solver](http://web.eecs.utk.edu/~jplank/plank/classes/cs140/Notes/Sudoku/index.html) works.</br>
 
-After testing this solver, we quickly realized that this solution would not be practical. For many reasons such as general time complexity of the solver, we abandoned this brute-force technique. However, the file has been left in the repo for reference.
-### CNN Solver
-When we began this project, we intended to explore using reinforcement learning (RL) to build a solver for the Rubik's Cube. However, after we started researching, we realized that developing a model using RL techniques would be far too time consuming and would require more advanced knowledge of machine learning than we possessed, or had time to learn. Thus, we decided that supervised learning may be the better approach due to the wider availability of Python libraries specifically for supervised rather than unsupervised learning. </br>
-
-After much research, we were able to develop a supervised learning model built on deep neural networks. This model is based on a convolutional neural network ([CNN](https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53)), a type of neural network typically used for image processing. The inspiration for this came from a similar implementation of a [CNN for a sudoku solver](https://towardsdatascience.com/solving-sudoku-with-convolution-neural-network-keras-655ba4be3b11). </br>
-
-All of the files associated with building the CNN solver are in the [cnn_solver](https://github.com/owencqueen/final_project_302/tree/master/cnn_solver) directory. Note: another copy of solver_helpers.py is included in this file because we had trouble with importing and packages in Python. </br>
-
-Here is the process by which we developed this model:
-
-#### 1. Generating data
-Our first approach to this problem was to generate a data set by recording the moves by which we shuffled the cube, and recording the initial state of the cube along with the series of moves by which we would solve the cube. An example of the original data set can be found in [old_data.csv](https://github.com/owencqueen/final_project_302/blob/master/example_data/old_data.csv). However, this posed several problems for our model, the primary problem being the output of the data set. </br>
-
-CNN's work best when they have a definite set of outputs. In other words, CNN's are not good at generating original output. Thus, our model was going to have a hard time generating a solution to a shuffle permutation it had not seen before. In addition, the idea of training the model to treat the output as labels (for example, UDF would be a series of moves that is a label) would mean that the model would have to have seen every possible series of moves of outputs that it could make. However, this defeats the purpose of training a machine learning model because then we could simply lookup the cube permutation, which would give us a fast solution. </br>
-
-Thus, it was decided that we needed a finite output space for our model. Naturally, we thought that the possible moves on the cube (see previous references) would serve as an appropriate output space. In the [sudoku solver](https://towardsdatascience.com/solving-sudoku-with-convolution-neural-network-keras-655ba4be3b11), Verma ran into a similar problem with his model, so he took the approach of attempting to solve the sudoku board one square at a time. This strategy was effective for him, so we decided to pursue a similar strategy in our model. </br> </br>
-
-So, we decided on generating a data set that included one move at a time. The goal was that if the model saw enough moves on the cube at different permutations, it would learn how each move manipulated the cube and which moves were effective at solving the cube at different permutations. The CNN lends well to detecting complex patterns within the input data, so this strategy seemed to be advantageous with our choice of methodology. </br> </br>
-##### reverse_shuffle.py
-We generated this data in the program [reverse_shuffle.py](https://github.com/owencqueen/final_project_302/blob/master/reverse_shuffle.py) (in the  primary repository). Upon running the program, it prompts the user as so:
-```
-How many rotations per shuffle? # Self-explanatory
-How many shuffles?              # Full iterations to be considered in output file
-Name of output file?            # Self-explanatory
-```
-- The total number of rows in your output file will be (num. shuffles)x(rot. per shuffle). 
-- Your output file will be located in the [cnn_solver](https://github.com/owencqueen/final_project_302/tree/master/cnn_solver) directory.</br>
-
-The output data from this program is stored in the following format: </br>
-![one_by_one screenshot](https://github.com/owencqueen/302_final_project/blob/master/doc_supplements/one_by_one-screenshot.png)
-</br>
-
-- The state of the cube is stored in the "state" column, and the move in response to this state is stored in the "move" column (see Standard Indexing System below). </br>
-
-This is the data which our model would train on.
-
-##### Our data
-We worked off of two primary datasets in this project: one_by_one.csv and cube_data.csv (both of which can be found in this public [Google Drive folder](https://drive.google.com/drive/folders/18-pDI7ZcoNsYXTu68iljprL7TQ4-Rgpj?usp=sharing)). We stored the data in a Google Drive folder because the data far exceeded the Github maximum file size. </br>
-
-The first file was one_by_one.csv, which was built with the following parameters:
-```
-UNIX> python3 reverse_shuffle.py
-How many rotations per shuffle? 20
-How many shuffles? 100000
-Name of output file? one_by_one.csv
-```
-
-The second file was cube_data.csv, which was built with the following parameters:
-```
-UNIX> python3 reverse_shuffle.py
-How many rotations per shuffle? 20
-How many shuffles? 400000
-Name of output file? cube_data.csv
-```
-
-#### 2. Processing data
-The function for the processing of the data is in the [process_data.py](https://github.com/owencqueen/final_project_302/blob/master/cnn_solver/process_data.py) file. This file must read in our data from the csv to a pandas dataframe and then convert it into a numpy array (the format by which the Keras model expects the data). </br></br>
-
-One additional step we had to work through was converting the character data of the cube into numerical data for the ML model. This was done by using helper functions written in solver_helpers.py. </br></br>
-
-This file is necessary to the model built in model.py.
-
-#### 3. Building the model
-The model is built in the file [model.py](https://github.com/owencqueen/final_project_302/blob/master/cnn_solver/model.py) (within the same function by which it is trained and compiled). The structure of this model is based off a similar structure from the [sudoku solver](https://towardsdatascience.com/solving-sudoku-with-convolution-neural-network-keras-655ba4be3b11) that we used as a reference. </br>
-
-This model consists of the following structure:
-```
-(Layer): input -> [Convolution] -> [Convolution] -> [Convolution] -> [Dense] -> output
-(Size):	       	      [50]             [50]             [100]          [13]
-```
-##### Convolutional Layers
-The convolutional layers perform a mathematical operation called [convolution](https://en.wikipedia.org/wiki/Convolution) on the input data. These layers are what make these types of networks unique, and this process has been shown to be very effective at detecting both high-level and low-level patterns in the data.
-###### Size:
-The size of our convolutional layers was relatively arbitrary. We did not do much research into optimizing this section of the network, so we based our structure off of the aforementioned sudoku solver. The third convolutional layer had more nodes that the first two, and that is due to the kernel size which is discussed below.
-###### Kernel size:
-The kernel is a parameter in the convolution function. Basically, the kernel is a matrix that iterates over the data and performs convolution at each step. Kernel size is important for the detection of patterns within the data. </br>
-
-We chose our kernel size in the following structure:
-```
-(Layer order):  [1] -> [2] -> [3]
-(Kernel size): (2,2)  (2,2)  (1,1)
-```
-The first two layers consisted 2x2 kernels and the last one consisted of a 1x1 kernel. We made a choice on these sizes thinking that as the data progressed through the model, we should have smaller kernels to pick up smaller patterns.
-
-###### Activation function:
-We chose our activation function to be [RELU](https://en.wikipedia.org/wiki/Rectifier_(neural_networks)), which has been proven to be very effective on neural networks due to its linear form.
-
-###### Padding:
-Padding is explained in much more detail in the article below on CNN's. We chose to use it because this is what the sudoku solver used.
-
-##### BatchNormalization
-Some of the sources that we came across claimed that using the [BatchNormalization](https://machinelearningmastery.com/batch-normalization-for-training-of-deep-neural-networks/) function, which normalizes the data in between layers in the network, improves model performance and accuracy. Naturally, we decided to implement this in our model. 
-
-##### Flatten
-Most of the models that we referenced in building our model, including the sudoku solver, flattened the data before the Dense layer in their model; therefore, we implemented a similar strategy in our model.
-
-##### Dense layer
-The dense layer represents the output layer in our model. It contains 13 nodes because we have 13 possible outputs from our model (see Standard Indexing System below). 
-
-##### Activation
-We chose to use [softmax](https://medium.com/data-science-bootcamp/understand-the-softmax-function-in-minutes-f3a59641e86d) as our activation function in this model. This was used by many of the other models that we referenced, and we had found some references that claimed it was highly effective in neural networks (see link in this paragraph).
-
-##### Optimizer
-We chose to use the [adam optimizer](https://towardsdatascience.com/adam-latest-trends-in-deep-learning-optimization-6be9a291375c) in our model with a learning rate of 0.001. This has been shown to perform better, in some instances, than the popular stochastic gradient descent algorithm. We chose a relatively low learning rate because we discovered that as we increased the learning rate, our model's accuracy was lowered.
-
-##### Compiling the model
-We used the compile() function to compile our model. This was the second-to-last step of creating our model.
-###### Loss function
-We chose spare categorical crossentropy solely because the sudoku model used this same loss function.
-
-For more information on the anatomy and physiology of convolutional neural networks, see [this article](https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53) on towardsdatascience.com.
-
-#### 4. Training the model
-The model is trained by running the model_driver.py script, which calls the train_obo (function in model.py file). Upon running this script, the user is prompted:
-```
-Name of new model:     # Self-explanatory
-Data to be trained on: # csv file in local directory to train model on
-Batch size:            # batch_size
-Num epochs:            # epochs  
-```
-The batch_size and epochs are arguments in the fit() function in model.py. Batch size denotes the number of samples in the data that are to be processed before the internal model parameters are updated. The number of epochs simply denotes the number of times the training process will iterate through the dataset. See [this article](https://machinelearningmastery.com/difference-between-a-batch-and-an-epoch/) for more information about batch_size and epochs. </br>
-
-We have included two of our trained models in this repository, located in the [cnn_solver/models](https://github.com/owencqueen/final_project_302/tree/master/cnn_solver/models) folder.
-##### [oboorg1.model](https://github.com/owencqueen/final_project_302/blob/master/cnn_solver/models/oboorg1.model)
-This was the first model that was built, and it was trained on the one_by_one.csv dataset (see above under "Our data"). These were the parameters for the model along with the accuracy results: </br>
-![Training oboorg1.model](https://github.com/owencqueen/final_project_302/blob/master/doc_supplements/one_by_one-model-terminal-output.png)
-Please note that the name of the file which this program was run on is now "model_driver.py" instead of "obo_model_driver.py". </br>
-
-The final accuracy of this model was 37.51%.
-##### [obonew1.model](https://github.com/owencqueen/final_project_302/blob/master/cnn_solver/models/obonew1.model)
-This model was trained on the cube_data.csv dataset (see above under "Our data"). This model was built after oboorg1.model. These were the parameters for the model along with the accuracy results: </br>
-![Training obonew1.model](https://github.com/owencqueen/final_project_302/blob/master/doc_supplements/cube_data-model-terminal-output.png)
-Please note, as is above, that the name of the file which this program was run on is now "model_driver.py" instead of "obo_model_driver.py". </br>
-
-The final accuracy of this model was 38.54%, as was to be expected for running this model on a larger dataset as compared to oboorg1.model.
-
-##### Conclusions after training the model
-Neither of our models achieved high accuracy in the initial training stages which would normally be very disappointing. However, because our model is only making individual guesses of moves, we should expect that when it comes to solving the Rubik's Cube, the model should perform better. In other words, our model may make bad individual guesses, but over the series of moves, these guesses may actually be effective. </br>
-
-We chose to use only three epochs because the improvement on the accuracy of the model seemed to diminish after 2-3 epochs.
-
-#### 5. Testing the model
-
-##### [model_tester.py](https://github.com/owencqueen/final_project_302/blob/master/model_test.py)
-This tester simply shuffles a Rubik's Cube and then extracts predictions from the model based on the current state of the cube. Upon running this module, the user is prompted with the following:
-```
-Model to test:
-Number of rotations for shuffle:
-```
-Note: ignore the garbage that is printed after entering your response. This is a result of using the keras/tensorflow modules. </br>
-Simply input the name of the model to be tested (i.e. no need to deal with file structure), and then input the number of rotations for which you will shuffle the cube before attempting to solve. </br>
-
-##### [model_tester_random.py](https://github.com/owencqueen/final_project_302/blob/master/model_test_random.py)
-This tester was built to combat some downfalls of relying only on our machine to solve the cube. It operates differently from model_tester.py in that if the model predicts repeating, redundant moves, this solver makes a random move. As far as running this tester, it takes the exact same parameters as model_tester.py.
-
-#### Results
-Although we received relatively poor accuracies from the training of our model, we anticipated that our model would produce more accurate results in the long run (since our model relied not on the one-step performance of our model but rather how it performed succesive moves). After running our testers several times here are our conclusions.
-
-
-To run the model and create other models:
-1. Get your data
-- You can do this by either runnning rs_one.py or by downloading the 'one_by_one.csv' data set from the Google drive (link in README).
-3. Create a directory called "models"
-2. Run obo_model_driver.py
-- Set the batch size and epoch number
-- Specify the name of the file to be stored in "models" directory
-
-##### Data Compression
-To compress the data to fit easily in the .csv file, there is:
-1. flatten_faces ([solver_helpers.py](https://github.com/owencqueen/302_final_project/blob/master/solver_helpers.py)): this function takes all the data in the faces within the Rubik's Cube and outputs them into a single string.
-2.  
- 
 ## Backend Cube/ Solvers Implementation
 ### cube.py
 All backend implementation of the rubiks_cube class (in [template_class](https://github.com/owencqueen/final_project_302/blob/master/r_cube/template_class.py)) workings is in cube.py. </br>
@@ -497,6 +322,199 @@ usage: python3 Cube_text.py cube_dimensions
 
 - Shuffle command:
 	- asks how many rotations should be made  
+	
+## Solvers
+### Recursive Solver
+The [recursive_solver.py](https://github.com/owencqueen/final_project_302/blob/master/recursive_solver.py) file contains the implementation of a recursive solver to the Rubik's Cube. This solver works in a similar style as Dr. Plank's [sudoku solver](http://web.eecs.utk.edu/~jplank/plank/classes/cs140/Notes/Sudoku/index.html) works.</br>
+
+After testing this solver, we quickly realized that this solution would not be practical. For many reasons such as general time complexity of the solver, we abandoned this brute-force technique. However, the file has been left in the repo for reference.
+### CNN Solver
+When we began this project, we intended to explore using reinforcement learning (RL) to build a solver for the Rubik's Cube. However, after we started researching, we realized that developing a model using RL techniques would be far too time consuming and would require more advanced knowledge of machine learning than we possessed, or had time to learn. Thus, we decided that supervised learning may be the better approach due to the wider availability of Python libraries specifically for supervised rather than unsupervised learning. </br>
+
+After much research, we were able to develop a supervised learning model built on deep neural networks. This model is based on a convolutional neural network ([CNN](https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53)), a type of neural network typically used for image processing. The inspiration for this came from a similar implementation of a [CNN for a sudoku solver](https://towardsdatascience.com/solving-sudoku-with-convolution-neural-network-keras-655ba4be3b11). </br>
+
+All of the files associated with building the CNN solver are in the [cnn_solver](https://github.com/owencqueen/final_project_302/tree/master/cnn_solver) directory. Note: another copy of solver_helpers.py is included in this file because we had trouble with importing and packages in Python. </br>
+
+Here is the process by which we developed this model:
+
+#### 1. Generating data
+Our first approach to this problem was to generate a data set by recording the moves by which we shuffled the cube, and recording the initial state of the cube along with the series of moves by which we would solve the cube. An example of the original data set can be found in [old_data.csv](https://github.com/owencqueen/final_project_302/blob/master/example_data/old_data.csv). However, this posed several problems for our model, the primary problem being the output of the data set. </br>
+
+CNN's work best when they have a definite set of outputs. In other words, CNN's are not good at generating original output. Thus, our model was going to have a hard time generating a solution to a shuffle permutation it had not seen before. In addition, the idea of training the model to treat the output as labels (for example, UDF would be a series of moves that is a label) would mean that the model would have to have seen every possible series of moves of outputs that it could make. However, this defeats the purpose of training a machine learning model because then we could simply lookup the cube permutation, which would give us a fast solution. </br>
+
+Thus, it was decided that we needed a finite output space for our model. Naturally, we thought that the possible moves on the cube (see previous references) would serve as an appropriate output space. In the [sudoku solver](https://towardsdatascience.com/solving-sudoku-with-convolution-neural-network-keras-655ba4be3b11), Verma ran into a similar problem with his model, so he took the approach of attempting to solve the sudoku board one square at a time. This strategy was effective for him, so we decided to pursue a similar strategy in our model. </br>
+
+So, we decided on generating a data set that included one move at a time. The goal was that if the model saw enough moves on the cube at different permutations, it would learn how each move manipulated the cube and which moves were effective at solving the cube at different permutations. The CNN lends well to detecting complex patterns within the input data, so this strategy seemed to be advantageous with our choice of methodology. </br>
+##### reverse_shuffle.py
+We generated this data in the program [reverse_shuffle.py](https://github.com/owencqueen/final_project_302/blob/master/reverse_shuffle.py) (in the  primary repository). Upon running the program, it prompts the user as so:
+```
+How many rotations per shuffle? # Self-explanatory
+How many shuffles?              # Full iterations to be considered in output file
+Name of output file?            # Self-explanatory
+```
+- The total number of rows in your output file will be (num. shuffles)x(rot. per shuffle). 
+- Your output file will be located in the [cnn_solver](https://github.com/owencqueen/final_project_302/tree/master/cnn_solver) directory.</br>
+
+The output data from this program is stored in the following format: </br>
+![one_by_one screenshot](https://github.com/owencqueen/302_final_project/blob/master/doc_supplements/one_by_one-screenshot.png)
+</br>
+
+- The state of the cube is stored in the "state" column, and the move in response to this state is stored in the "move" column (see Standard Indexing System below). </br>
+
+This is the data which our model would train on.
+
+##### Our data
+We worked off of two primary datasets in this project: one_by_one.csv and cube_data.csv (both of which can be found in this public [Google Drive folder](https://drive.google.com/drive/folders/18-pDI7ZcoNsYXTu68iljprL7TQ4-Rgpj?usp=sharing)). We stored the data in a Google Drive folder because the data far exceeded the Github maximum file size. </br>
+
+The first file was one_by_one.csv, which was built with the following parameters:
+```
+UNIX> python3 reverse_shuffle.py
+How many rotations per shuffle? 20
+How many shuffles? 100000
+Name of output file? one_by_one.csv
+```
+
+The second file was cube_data.csv, which was built with the following parameters:
+```
+UNIX> python3 reverse_shuffle.py
+How many rotations per shuffle? 20
+How many shuffles? 400000
+Name of output file? cube_data.csv
+```
+
+#### 2. Processing data
+The function for the processing of the data is in the [process_data.py](https://github.com/owencqueen/final_project_302/blob/master/cnn_solver/process_data.py) file. This file must read in our data from the csv to a pandas dataframe and then convert it into a numpy array (the format by which the Keras model expects the data). </br></br>
+
+One additional step we had to work through was converting the character data of the cube into numerical data for the ML model. This was done by using helper functions written in solver_helpers.py. </br></br>
+
+This file is necessary to the model built in model.py.
+
+#### 3. Building the model
+The model is built in the file [model.py](https://github.com/owencqueen/final_project_302/blob/master/cnn_solver/model.py) (within the same function by which it is trained and compiled). The structure of this model is based off a similar structure from the [sudoku solver](https://towardsdatascience.com/solving-sudoku-with-convolution-neural-network-keras-655ba4be3b11) that we used as a reference. </br>
+
+This model consists of the following structure:
+```
+(Layer): input -> [Convolution] -> [Convolution] -> [Convolution] -> [Dense] -> output
+(Size):	       	      [50]             [50]             [100]          [13]
+```
+##### Convolutional Layers
+The convolutional layers perform a mathematical operation called [convolution](https://en.wikipedia.org/wiki/Convolution) on the input data. These layers are what make these types of networks unique, and this process has been shown to be very effective at detecting both high-level and low-level patterns in the data.
+###### Size:
+The size of our convolutional layers was relatively arbitrary. We did not do much research into optimizing this section of the network, so we based our structure off of the aforementioned sudoku solver. The third convolutional layer had more nodes that the first two, and that is due to the kernel size which is discussed below.
+###### Kernel size:
+The kernel is a parameter in the convolution function. Basically, the kernel is a matrix that iterates over the data and performs convolution at each step. Kernel size is important for the detection of patterns within the data. </br>
+
+We chose our kernel size in the following structure:
+```
+(Layer order):  [1] -> [2] -> [3]
+(Kernel size): (2,2)  (2,2)  (1,1)
+```
+The first two layers consisted 2x2 kernels and the last one consisted of a 1x1 kernel. We made a choice on these sizes thinking that as the data progressed through the model, we should have smaller kernels to pick up smaller patterns.
+
+###### Activation function:
+We chose our activation function to be [RELU](https://en.wikipedia.org/wiki/Rectifier_(neural_networks)), which has been proven to be very effective on neural networks due to its linear form.
+
+###### Padding:
+Padding is explained in much more detail in the article below on CNN's. We chose to use it because this is what the sudoku solver used.
+
+##### BatchNormalization
+Some of the sources that we came across claimed that using the [BatchNormalization](https://machinelearningmastery.com/batch-normalization-for-training-of-deep-neural-networks/) function, which normalizes the data in between layers in the network, improves model performance and accuracy. Naturally, we decided to implement this in our model. 
+
+##### Flatten
+Most of the models that we referenced in building our model, including the sudoku solver, flattened the data before the Dense layer in their model; therefore, we implemented a similar strategy in our model.
+
+##### Dense layer
+The dense layer represents the output layer in our model. It contains 13 nodes because we have 13 possible outputs from our model (see Standard Indexing System below). 
+
+##### Activation
+We chose to use [softmax](https://medium.com/data-science-bootcamp/understand-the-softmax-function-in-minutes-f3a59641e86d) as our activation function in this model. This was used by many of the other models that we referenced, and we had found some references that claimed it was highly effective in neural networks (see link in this paragraph).
+
+##### Optimizer
+We chose to use the [adam optimizer](https://towardsdatascience.com/adam-latest-trends-in-deep-learning-optimization-6be9a291375c) in our model with a learning rate of 0.001. This has been shown to perform better, in some instances, than the popular stochastic gradient descent algorithm. We chose a relatively low learning rate because we discovered that as we increased the learning rate, our model's accuracy was lowered.
+
+##### Compiling the model
+We used the compile() function to compile our model. This was the second-to-last step of creating our model.
+###### Loss function
+We chose spare categorical crossentropy solely because the sudoku model used this same loss function.
+
+For more information on the anatomy and physiology of convolutional neural networks, see [this article](https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53) on towardsdatascience.com.
+
+#### 4. Training the model
+The model is trained by running the model_driver.py script, which calls the train_obo (function in model.py file). Upon running this script, the user is prompted:
+```
+Name of new model:     # Self-explanatory
+Data to be trained on: # csv file in local directory to train model on
+Batch size:            # batch_size
+Num epochs:            # epochs  
+```
+The batch_size and epochs are arguments in the fit() function in model.py. Batch size denotes the number of samples in the data that are to be processed before the internal model parameters are updated. The number of epochs simply denotes the number of times the training process will iterate through the dataset. See [this article](https://machinelearningmastery.com/difference-between-a-batch-and-an-epoch/) for more information about batch_size and epochs. </br>
+
+We have included two of our trained models in this repository, located in the [cnn_solver/models](https://github.com/owencqueen/final_project_302/tree/master/cnn_solver/models) folder.
+##### [oboorg1.model](https://github.com/owencqueen/final_project_302/blob/master/cnn_solver/models/oboorg1.model)
+This was the first model that was built, and it was trained on the one_by_one.csv dataset (see above under "Our data"). These were the parameters for the model along with the accuracy results: </br>
+![Training oboorg1.model](https://github.com/owencqueen/final_project_302/blob/master/doc_supplements/one_by_one-model-terminal-output.png)
+Please note that the name of the file which this program was run on is now "model_driver.py" instead of "obo_model_driver.py". </br>
+
+The final accuracy of this model was 37.51%.
+##### [obonew1.model](https://github.com/owencqueen/final_project_302/blob/master/cnn_solver/models/obonew1.model)
+This model was trained on the cube_data.csv dataset (see above under "Our data"). This model was built after oboorg1.model. These were the parameters for the model along with the accuracy results: </br>
+![Training obonew1.model](https://github.com/owencqueen/final_project_302/blob/master/doc_supplements/cube_data-model-terminal-output.png)
+Please note, as is above, that the name of the file which this program was run on is now "model_driver.py" instead of "obo_model_driver.py". </br>
+
+The final accuracy of this model was 38.54%, as was to be expected for running this model on a larger dataset as compared to oboorg1.model.
+
+##### Conclusions after training the model
+Neither of our models achieved high accuracy in the initial training stages which would normally be very disappointing. However, because our model is only making individual guesses of moves, we should expect that when it comes to solving the Rubik's Cube, the model should perform better. In other words, our model may make bad individual guesses, but over the series of moves, these guesses may actually be effective. </br>
+
+We chose to use only three epochs because the improvement on the accuracy of the model seemed to diminish after 2-3 epochs.
+
+#### 5. Testing the model
+
+##### [model_tester.py](https://github.com/owencqueen/final_project_302/blob/master/model_test.py)
+This tester simply shuffles a Rubik's Cube and then extracts predictions from the model based on the current state of the cube. Upon running this module, the user is prompted with the following:
+```
+Model to test:
+Number of rotations for shuffle:
+```
+Note: ignore the garbage that is printed after entering your response. This is a result of using the keras/tensorflow modules. </br>
+Simply input the name of the model to be tested (i.e. no need to deal with file structure), and then input the number of rotations for which you will shuffle the cube before attempting to solve. </br>
+
+##### [model_tester_random.py](https://github.com/owencqueen/final_project_302/blob/master/model_test_random.py)
+This tester was built to combat some downfalls of relying only on our machine to solve the cube. It operates differently from model_tester.py in that if the model predicts repeating, redundant moves, this solver makes a random move. As far as running this tester, it takes the exact same parameters as model_tester.py. </br>
+
+##### Testing over multiple runs: [ml_tester.py](https://github.com/owencqueen/final_project_302/blob/master/ml_tester.py)
+The two testers described above worked great, but they were limited in that they could only test the model once for a shuffled cube. We needed more detailed data over more samples, so we wrote the [ml_tester.py](https://github.com/owencqueen/final_project_302/blob/master/ml_tester.py) program. This program is an adaptation of the two above testers, and it takes their method and allows us to run this process multiple times, recording data on the success of each trial. This allowed us to analyze how the different testers and the different models performed at different number of rotations for shuffles. 
+
+#### Results
+Although we received relatively poor accuracies from the training of our model, we anticipated that our model would produce more accurate results in the long run (since our model relied not on the one-step performance of our model but rather how it performed succesive moves). </br>
+
+Here are the results of the analysis done in ml_tester.py: 
+
+![ml_tester.py results](https://github.com/owencqueen/final_project_302/blob/master/doc_supplements/model_plots.png)
+
+From this plot, one can see that none of models performed relatively well at rotations over ~7 shuffles. There was an exponential decline in performance, and by the time we reached 10 shuffles, our models had under a 20% success rate. By the time we reached 20 shuffles, both models and both testers were practically ineffective at solving the Rubik's Cube. We can also see from this plot that our random tester did not necessarily perform better than the regular tester. This was surprising to us, and this program could possibly be made more robust in order to leverage the random move strategy.  </br>
+
+Some of the common problems we observed in our model was repetitiveness. Often times, it would get stuck in a state of flipping between two moves, giving outputs such as the following:
+```
+D
+U
+F
+F`
+F
+F`
+F
+F`
+```
+It would continue to output moves that were compliments of each other. This made us think that the random move solver would work better, but as we can see in the plots above, it did not. We are unsure of how to fix this problem; the solution may involve representing the data differently, implementing a more robust randomness in our solver, or something entirely different. This was often one of the reasons that the models would fail to solve the cube, so this is something we could explore more in-depth if we had more time. </br>
+
+It is quite evident that this model needs work in order to more effectively solve the cube. However, we were quite proud of ourselves for this being the first time we had ever worked with machine learning, much less deep learning. There are many options we could explore to improve this model:
+- We could figure out a different way to represent our data. Our strategy may have limited the model in that it could comprehend series of moves.
+- We could improve the structure of our network. I believe that a CNN could be used effectively on this problem, but the structure and setup of the network could definitely be improved. 
+- We could develop more robust testers. It is possible that our testers could just use a little more human intervention to leverage the model, and we could explore different ways of manipulating the cube and feeding the data to the model. </br>
+
+The problem of the Rubik's Cube is quite challenging because it is considered to be an [NP-complete problem](https://arxiv.org/abs/1706.06708). Our model may have not been the best, but at least it solved some permutations of the cube. We could definitely call that a start. </br> 
+
+The data displayed on these plots was generated by our ml_tester.py program (data is located in [model_test_data](https://github.com/owencqueen/final_project_302/tree/master/model_test_data) directory), and the plot was made using an R script, [plotting_model_results.R](https://github.com/owencqueen/final_project_302/blob/master/model_test_data/plotting_model_results.R). 
 
 ## Libraries:
 You can install all of these libraries using [pip](https://pip.pypa.io/en/stable/). For example:
