@@ -1,4 +1,5 @@
 # John Greathouse
+# Final Project CS302
 # Text-based User Interfacing
 
 import sys
@@ -81,7 +82,7 @@ def main():
 
 
 def in_handler(cube, cmmd):
-	
+### Prints out the correct responses and modifies the cube ###	
 	if cmmd.lower() == 'help':
 		print(help_cmd)
 		return
@@ -142,7 +143,7 @@ def in_handler(cube, cmmd):
 		return
 
 def do_moves(cube, move_list):
-
+### This function calls the moves on the object ###
 	rot = 0
 
 	for i in move_list:
@@ -207,6 +208,7 @@ def do_moves(cube, move_list):
 	return 1
 
 def padding(face):
+### Adds padding to the string for print formatting ###
 	a = ""
 	for i in face[0]:
 		a += '  '
@@ -214,7 +216,7 @@ def padding(face):
 	return a
 
 def print_face(face, to_print, dim):
-
+### Prints the faces of the cube ###
 	if face == '\n':
 		
 		out = ""
@@ -269,7 +271,7 @@ def print_face(face, to_print, dim):
 
 
 def print_cube(cube):
-
+### Print out the cube  ###
 	dim = cube.dim
 	to_print = [0]
 	empty_face = [[' ',' '],[' ',' ']]
@@ -298,7 +300,7 @@ def print_cube(cube):
 	return 1
 
 def is_rot(letter):
-
+### Checks if the rotations are viable ###
 	i = letter.lower();
 	
 	if i.isalpha() and (i == 'l' or i == 'r'\
