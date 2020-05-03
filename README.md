@@ -1,6 +1,11 @@
 # Exploring the 2x2 Rubik's Cube
 Final project for CS302 at UTK.
 
+### Developers:
+[John Greathouse](https://github.com/jgreatho) </br>
+[Owen Queen](https://github.com/owencqueen) </br>
+[Jared Staman](https://github.com/jstaman5) </br>
+
 Access our Google Drive folder with log information [here].
 
 [here]: https://drive.google.com/drive/folders/1hIw_WaZPfqpyH6AnfTdHOG10UUI7ogju?usp=sharing
